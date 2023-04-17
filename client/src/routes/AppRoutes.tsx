@@ -5,6 +5,7 @@ import Layout from './Layout';
 import LoginPage from '../pages/login/LoginPage';
 import Contact from '../pages/contact/ContactPage';
 import Book from '../pages/book/BookPage';
+import RegisterPage from '../pages/register/RegisterPage';
 
 type Props = {}
 
@@ -29,6 +30,10 @@ const AppRoutes = (props: Props) => {
         {
             path: "/login",
             element: <LoginPage />
+        },
+        {
+            path: "/register",
+            element: <RegisterPage />
         },
     ]);
 

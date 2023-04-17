@@ -1,10 +1,10 @@
-.login-container {
+.register-container {
     background-color: #fff;
     display: flex;
     justify-content: center;
     margin: 0 auto;
     height: 100vh;
-    .login-form {
+    .register-form {
         border-radius: 8px;
         width: 40%;
         padding: 35px;
@@ -12,7 +12,7 @@
         background: #fff;
         box-shadow: 0 2px 12px 12px rgb(0 0 0 / 10%);
 
-        .btn-login {
+        .btn-register {
             width: 30%;
             height: 40px;
             text-align: center;
