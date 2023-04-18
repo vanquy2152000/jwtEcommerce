@@ -4,12 +4,6 @@ import { Layout, Form, Input, Button, Typography, Divider, message, notification
 import { useState } from 'react'
 import { registerUser } from '../../service/authApi'
 
-interface ApiResponse {
-    _id: string;
-    message?: string | string[];
-    // các thuộc tính khác của phản hồi
-}
-
 const RegisterPage = () => {
     const [loadings, setLoadings] = useState<boolean[]>([])
 
@@ -32,10 +26,8 @@ const RegisterPage = () => {
     };
 
     const onFinish = async (values: any) => {
-        console.log("check values :", values)
         enterLoading(1)
         const res = await registerUser(values)
-        console.log("check res :", res)
 
         if (res?.data?._id) {
             message.success('Đăng ký tài khoản thành công!');
@@ -64,7 +56,6 @@ const RegisterPage = () => {
                 <Form.Item
                     label={<Typography.Text strong>Full Name </Typography.Text>}
                     labelCol={{ span: 24 }}
-                    wrapperCol={{ span: 24 }}
                     name="fullName"
                     rules={[{ required: true, message: 'Vui lòng nhập full name!' }]}
                     labelAlign="right"
@@ -74,7 +65,6 @@ const RegisterPage = () => {
                 <Form.Item
                     label={<Typography.Text strong>Email </Typography.Text>}
                     labelCol={{ span: 24 }}
-                    wrapperCol={{ span: 24 }}
                     name="email"
                     rules={[{ required: true, message: 'Vui lòng nhập email!' }]}
                     labelAlign="right"
@@ -84,7 +74,6 @@ const RegisterPage = () => {
                 <Form.Item
                     label={<Typography.Text strong>Phone </Typography.Text>}
                     labelCol={{ span: 24 }}
-                    wrapperCol={{ span: 24 }}
                     name="phone"
                     rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
                     labelAlign="right"
@@ -95,7 +84,6 @@ const RegisterPage = () => {
                 <Form.Item
                     label={<Typography.Text strong>Password </Typography.Text>}
                     labelCol={{ span: 24 }}
-                    wrapperCol={{ span: 24 }}
                     name="password"
                     rules={[{ required: true, message: 'Vui lòng nhập password!' }]}
 
@@ -116,6 +104,7 @@ const RegisterPage = () => {
                         Create Account
                     </Button>
                 </Form.Item>
+                <Divider>Or</Divider>
                 <Typography.Text strong >
                     <span>Bạn đã có tài khoản? </span>
                     <Link to={'/login'} style={{ textDecoration: 'underline' }}>

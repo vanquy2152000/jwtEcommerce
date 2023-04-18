@@ -1,0 +1,53 @@
+.layout-app {
+    background-color: #ffffff;
+    .header-layout {
+        background-color: #ffffff;
+        height: 64px;
+        display: flex;
+        justify-content: space-around;
+        box-shadow: 0 2px 12px 12px rgb(0 0 0 / 5%);
+        align-items: center;
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: #ea4c89;
+            .icon-react {
+                font-size: 3em;
+            }
+            .rotate {
+                /* biến đổi xoay vòng */
+                -webkit-animation: spin 10s linear infinite;
+                -moz-animation: spin 10s linear infinite;
+                animation: spin 10s linear infinite;
+
+                @-moz-keyframes spin {
+                    100% {
+                        -moz-transform: rotate(360deg);
+                    }
+                }
+
+                @-webkit-keyframes spin {
+                    100% {
+                        -webkit-transform: rotate(360deg);
+                    }
+                }
+
+                @keyframes spin {
+                    100% {
+                        -webkit-transform: rotate(360deg);
+                        transform: rotate(360deg);
+                    }
+                }
+                /* màu và kích thước của icon */
+            }
+        }
+        .header-text {
+            cursor: pointer;
+            color: #808080;
+            &:hover {
+                color: #ea4c89;
+            }
+        }
+    }
+}
