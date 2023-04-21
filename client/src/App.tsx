@@ -11,9 +11,7 @@ const App = () => {
 
   const fetchAccount = async () => {
     if (window.location.pathname === '/login' || window.location.pathname === '/register') return;
-
     const res = await getAccount();
-    console.log("check res : ", res)
     if (res && res.data) {
       dispatch(doGetAccountAction(res.data))
     }

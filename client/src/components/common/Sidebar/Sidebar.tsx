@@ -1,62 +1,68 @@
-import { DashboardOutlined, UserOutlined } from '@ant-design/icons'
-import { Layout, Menu, theme } from 'antd'
 import Sider from 'antd/es/layout/Sider'
+import { DashboardOutlined, PoweroffOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons'
+import { Menu, theme } from 'antd'
 import { TbBooks } from 'react-icons/tb'
 import { RiMoneyDollarCircleLine } from 'react-icons/ri'
-import './Sidebar.scss'
 import { FaReact } from 'react-icons/fa';
+import { FiUsers } from 'react-icons/fi';
+import './Sidebar.scss'
+import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 type Props = {
     collapsed: boolean,
 }
 
 type SidebarItem = {
-    key: string,
-    icon: JSX.Element,
-    label: string,
-    children?: { key: string, label: string, icon: JSX.Element }[],
+    key?: string,
+    icon?: JSX.Element,
+    label: JSX.Element,
+    children?: { key?: string, label: JSX.Element, icon?: JSX.Element }[],
     danger?: boolean
 }
 
 const items: SidebarItem[] = [
     {
-        key: '/admin',
+        key: 'dashboard',
         icon: <DashboardOutlined />,
-        label: 'DashBoard',
+        label: <Link to='/admin'>Dashboard</Link>,
     },
     {
-        key: 'managePage',
         icon: <UserOutlined />,
-        label: 'Manage Users',
+        label: <span>Manage Users</span>,
         children: [
             {
-                key: "/config-other/partner",
-                icon: <UserOutlined />,
-                label: 'Quản lý đối tác',
+                key: "crud",
+                icon: <FiUsers />,
+                label: <Link to='/admin/user'>CRUD</Link>,
             },
+            {
+                label: <Link to='/admin/user'>File1</Link>,
+                key: 'file1',
+                icon: <TeamOutlined />,
+            }
         ]
     },
     {
-        key: '/media-store/index',
         icon: <TbBooks />,
-        label: 'Manage Books',
+        label: <Link to='/admin/book'>Manage Books</Link>,
     },
     {
-        key: 'order',
         icon: <RiMoneyDollarCircleLine />,
-        label: 'Manage Orders',
+        label: <Link to='/admin/order'>Manage Orders</Link>,
     },
-    // {
-    //     key: "signout",
-    //     icon: <PoweroffOutlined />,
-    //     label: 'SignOut',
-    //     danger: true
-    // },
+    {
+        icon: <PoweroffOutlined />,
+        label: <span>Sign Out</span>,
+        danger: true
+    },
 ]
 const Sidebar = ({ collapsed }: Props) => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+
+    const [activeMenu, setActiveMenu] = useState<string>('dashboard');
 
     return (
         <Sider
@@ -83,8 +89,8 @@ const Sidebar = ({ collapsed }: Props) => {
             </div>
             <Menu
                 mode="inline"
-                defaultSelectedKeys={[location.pathname]}
-                selectedKeys={[location.pathname]}
+                defaultSelectedKeys={[activeMenu]}
+                onClick={(e) => setActiveMenu(e.key)}
                 items={items}
             />
         </Sider >

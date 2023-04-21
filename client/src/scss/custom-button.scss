@@ -1,0 +1,103 @@
+.btn-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ea4c89;
+    color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff;
+        border-color: #fff;
+        border: 1px solid #ea4c89 !important;
+        color: #ea4c89 !important;
+    }
+}
+.btn-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ea4c89;
+    color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff;
+        border-color: #fff;
+        border: 1px solid #ea4c89 !important;
+        color: #ea4c89 !important;
+    }
+}
+
+.btn-clear {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+
+.btn-edit-table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #489620;
+    color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff;
+        border-color: #fff;
+        border: 1px solid #489620 !important;
+        color: #489620 !important;
+    }
+}
+.btn-delete-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #ff4949;
+    border-color: #ff4949;
+    font-size: 14px;
+    margin: 5px 0;
+    border-radius: 5px;
+    cursor: pointer;
+    width: auto;
+    &:hover {
+        color: #fff !important;
+        background-color: #ff6d6d !important;
+        border: 1px solid #ff6d6d !important;
+        transform: translateY(-3px);
+    }
+}
+
+.btn-import {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ea4c89;
+    color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff;
+        border-color: #fff;
+        border: 1px solid #ea4c89 !important;
+        color: #ea4c89 !important;
+    }
+}
+.btn-export {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background-color: #ea4c89;
+    color: #fff;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff;
+        border-color: #fff;
+        border: 1px solid #ea4c89 !important;
+        color: #ea4c89 !important;
+    }
+}

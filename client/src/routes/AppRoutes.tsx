@@ -7,16 +7,17 @@ import RegisterPage from '../pages/register/RegisterPage';
 import NotFound from '../components/common/Found/NotFound';
 import LayoutAdmin from '../components/layout/LayoutAdmin';
 import PrivateRoute from './PrivateRoute';
-import AdminPage from '../pages/admin/AdminPage';
 import { useSelector } from 'react-redux';
 import Loading from '../components/common/Loading/Loading';
 import LayoutApp from '../components/layout/LayoutApp';
+import DashboardPage from '../pages/admin/Dashboard/DashboardPage';
+import UserPage from '../pages/admin/User/UserPage';
+import BookPage from '../pages/admin/Book/BookPage';
+import OrderPage from '../pages/admin/Order/OrderPage';
 type Props = {}
 
 const AppRoutes = (props: Props) => {
-
     const isLoading = useSelector((state: any) => state?.account.isLoading)
-    console.log(isLoading)
 
     const router = createBrowserRouter([
         {
@@ -37,22 +38,27 @@ const AppRoutes = (props: Props) => {
         },
         {
             path: "/admin",
-            element: <LayoutAdmin />,
+            element:
+                <PrivateRoute>
+                    <LayoutAdmin />
+                </PrivateRoute>,
             errorElement: <NotFound />,
             children: [
                 {
-                    index: true, element:
-                        <PrivateRoute>
-                            <AdminPage />
-                        </PrivateRoute>
+                    index: true,
+                    element: <DashboardPage />
                 },
                 {
                     path: 'user',
-                    element: <Contact />
+                    element: <UserPage />
                 },
                 {
                     path: 'book',
-                    element: <Book />
+                    element: <BookPage />
+                },
+                {
+                    path: 'order',
+                    element: <OrderPage />
                 },
             ]
         },

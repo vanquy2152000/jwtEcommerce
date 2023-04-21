@@ -1,0 +1,9 @@
+.user-container {
+    background-color: #fff;
+    .header-user {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 20px;
+    }
+}

@@ -8,8 +8,8 @@ const Loading = () => {
             left: "50%",
             transform: "translate(-50%, -50%)"
         }}>
-            <HashLoader color="#36d7b7" />
-            <div style={{ marginTop: "10px", color: "#36d7b7" }}>Loading ...</div>
+            <HashLoader color="#ea4c89" />
+            <div style={{ marginTop: "10px", color: "#ea4c89" }}>Loading ...</div>
         </div>
     )
 }

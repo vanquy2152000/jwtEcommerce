@@ -11,14 +11,10 @@ import { doLogoutUser } from '../../redux/account/accountSlice';
 
 const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState<boolean>(false);
-    const isAdminRole = window.location.pathname.startsWith('/admin')
     const isAuthenticated = useSelector((state: any) => state.account.isAuthenticated)
     const user = useSelector((state: any) => state.account.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
-    console.log(user)
-    console.log(isAuthenticated)
 
     const items: MenuProps['items'] = [
         {
