@@ -4,7 +4,7 @@ export interface IUsers {
     email: string,
     phone: string,
     role: string,
-    avatar: string,
+    avatar?: string,
     isActive: boolean,
     createdAt: string,
     updatedAt: string,
@@ -14,12 +14,18 @@ export interface IAddUser {
     fullName: string,
     password: string,
     email: string,
-    phone: string
+    phone: string,
 }
+export interface IAddUserMulti {
+    fullName: string,
+    password: string,
+    email: string,
+    phone: string,
+}[]
 
 export interface IUpdateUser {
-    _id: string,
-    fullName: string,
-    phone: string,
-    avatar: string
+    _id?: string,
+    fullName?: string,
+    phone?: string,
+    avatar?: string
 }

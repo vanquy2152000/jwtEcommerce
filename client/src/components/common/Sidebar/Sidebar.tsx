@@ -64,6 +64,8 @@ const Sidebar = ({ collapsed }: Props) => {
 
     const [activeMenu, setActiveMenu] = useState<string>('dashboard');
 
+    console.log(activeMenu)
+
     return (
         <Sider
             width={220}
@@ -90,6 +92,7 @@ const Sidebar = ({ collapsed }: Props) => {
             <Menu
                 mode="inline"
                 defaultSelectedKeys={[activeMenu]}
+                selectedKeys={[activeMenu]}
                 onClick={(e) => setActiveMenu(e.key)}
                 items={items}
             />

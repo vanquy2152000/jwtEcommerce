@@ -1,8 +1,8 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import Footer from '../common/Footer/Footer'
 import { Header } from 'antd/es/layout/layout'
-import { Badge, Input, Dropdown, Space, MenuProps, message, Layout } from 'antd'
-import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons'
+import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar } from 'antd'
+import { DownOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 import { FaReact } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../service/authApi'
@@ -14,12 +14,9 @@ const LayoutApp = () => {
     const user = useSelector((state: any) => state.account.user)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
 
-    const items: MenuProps['items'] = [
-        {
-            label: <Link to="/admin">Trang quản trị</Link>,
-            key: '0',
-        },
+    let items: MenuProps['items'] = [
         {
             label: <Link to="#">Quản lí tài khoản</Link>,
             key: '1',
@@ -36,6 +33,13 @@ const LayoutApp = () => {
             key: '3',
         },
     ];
+
+    if (isAuthenticated === true && user?.role === 'ADMIN') {
+        items.unshift({
+            label: <Link to="/admin">Trang quản trị</Link>,
+            key: '0',
+        })
+    }
 
     const handleLogOut = async () => {
         const res = await logoutUser()
@@ -55,7 +59,7 @@ const LayoutApp = () => {
                 </span>
                 <Input.Search
                     placeholder="Tìm kiếm sản phẩm"
-                    style={{ width: '60%', height: 36 }}
+                    style={{ width: '50%', height: 36 }}
                 // size="large"
                 // onSearch={(value: any) => console.log(value)}
                 />
@@ -74,6 +78,7 @@ const LayoutApp = () => {
                             <Dropdown menu={{ items }} trigger={['click']}>
                                 <span className="header-text" onClick={(e) => e.preventDefault()}>
                                     <Space>
+                                        <Avatar size={46} src={urlAvatar} />
                                         <span>Welcome {user.fullName}</span>
                                         <DownOutlined />
                                     </Space>

@@ -1,4 +1,4 @@
-import { IAddUser, IUpdateUser } from "../types/user";
+import { IAddUser, IAddUserMulti, IUpdateUser } from "../types/user";
 import axios from "../utils/axios-customize";
 
 export const getAllUser = () => {
@@ -13,12 +13,12 @@ export const postAddUser = (addUser: IAddUser) => {
     return axios.post(`/api/v1/user`, { ...addUser })
 }
 
-export const postAddListUser = (addUser: IAddUser[]) => {
-    return axios.post(`/api/v1/user/bulk-create`, { ...addUser })
+export const postAddListUser = (addUserMulti: IAddUserMulti[]) => {
+    return axios.post(`/api/v1/user/bulk-create`, [...addUserMulti])
 }
 
-export const putUpdateUser = (updateUser: IUpdateUser, userId: string) => {
-    return axios.put(`/api/v1/user/${userId}`, { ...updateUser })
+export const putUpdateUser = (updateUser: IUpdateUser) => {
+    return axios.put(`/api/v1/user`, { ...updateUser })
 }
 export const deleteUser = (userId: string) => {
     return axios.delete(`/api/v1/user/${userId}`)

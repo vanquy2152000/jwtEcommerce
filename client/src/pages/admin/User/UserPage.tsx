@@ -1,5 +1,8 @@
+import * as XLSX from 'xlsx';
 import InputSearch from '../../../components/common/Admin/User/Search/InputSearch'
 import UserDetail from '../../../components/common/Admin/User/UserDetail';
+import ModalUser from '../../../components/common/Admin/User/ModalUser';
+import ModalImportUser from '../../../components/common/Admin/User/DataExcel/ModalImportUser';
 import { Link } from 'react-router-dom';
 import { Button, Col, Layout, Modal, Pagination, Row, Table, Tooltip, Typography, message } from 'antd'
 import { useMemo } from 'react'
@@ -9,11 +12,11 @@ import { IUsers } from '../../../types/user';
 import { BsPersonAdd, BsTrash } from 'react-icons/bs'
 import { BiImport, BiExport } from 'react-icons/bi'
 import { GrRefresh } from 'react-icons/gr'
-import { AiOutlineEye } from 'react-icons/ai'
+import { AiOutlineEdit, AiOutlineEye } from 'react-icons/ai'
 import { ColumnsType } from 'antd/es/table'
+import { EditTwoTone, ExclamationCircleFilled } from '@ant-design/icons';
 import './UserPage.scss'
 import '../../../scss/custom-table.scss'
-import { ExclamationCircleFilled } from '@ant-design/icons';
 
 const { confirm } = Modal;
 
@@ -33,8 +36,7 @@ const confirmationPopup = (param: ConfirmationPopupParams) => {
     centered: true,
     cancelText: 'Đóng',
     okButtonProps: { className: "btn-ok-modal" },
-    cancelButtonProps: { className: "btn-close-modal" },
-    className: "modal-container-action"
+    cancelButtonProps: { className: "btn-cancel-modal" },
   })
 }
 
@@ -44,6 +46,9 @@ const UserPage = () => {
   const [listUsers, setListUsers] = useState<IUsers[]>([])
   const [openViewDetail, setOpenViewDetail] = useState<boolean>(false)
   const [dataUserDetail, setDataUserDetail] = useState<IUsers>()
+  const [openModalUser, setOpenModalUser] = useState<boolean>(false)
+  const [openModalImportUser, setOpenModalImportUser] = useState<boolean>(false)
+  const [actionModalUser, setActionModalUser] = useState<string>('CREATE')
 
   const enterLoading = (index: number) => {
     setLoadings((prevLoadings) => {
@@ -79,9 +84,7 @@ const UserPage = () => {
       setQueryUsers({ ...queryUsers, total: res.data.meta.total })
       setListUsers(res.data.result)
     }
-
   }
-
 
   const baseIndex = useMemo(() => {
     return (queryUsers.currentPage - 1) * queryUsers.pageSize
@@ -90,7 +93,6 @@ const UserPage = () => {
   useEffect(() => {
     fetchUser()
   }, [queryUsers.currentPage, queryUsers.pageSize, queryUsers.filter, queryUsers.sortQuery])
-
 
   const handleSearch = async (query: string) => {
     setQueryUsers({ ...queryUsers, currentPage: 1, filter: query })
@@ -134,6 +136,47 @@ const UserPage = () => {
   // btn table
   const handleRefresh = () => {
     setQueryUsers({ ...queryUsers, filter: '', sortQuery: '' })
+  }
+
+  // Modal
+  const handleModalAddUser = () => {
+    setActionModalUser('CREATE')
+    setOpenModalUser(true)
+  }
+  const handleEditUserCallback = (record: IUsers) => {
+    return () => {
+      setActionModalUser('UPDATE')
+      setOpenModalUser(true)
+      setDataUserDetail(record)
+    }
+  }
+
+  const handleSaveModalUser = () => {
+    setOpenModalUser(false)
+    fetchUser()
+  }
+
+  const handleCloseModalUser = () => {
+    setOpenModalUser(false)
+  }
+
+  const handleSaveModalImportUser = () => {
+    setOpenModalImportUser(false)
+    fetchUser()
+  }
+
+  const handleCloseModalImportUser = () => {
+    setOpenModalImportUser(false)
+  }
+
+  // export excel
+  const handleExportExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(listUsers);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
+    //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
+    XLSX.writeFile(workbook, "Danh sách người dùng.csv");
   }
 
   const baseColumns: ColumnsType<IUsers> = [
@@ -210,9 +253,9 @@ const UserPage = () => {
         <Row style={{ gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
           <Tooltip title="Chi tiết">
             <Button
-              icon={<AiOutlineEye />}
+              icon={<AiOutlineEdit />}
               className="btn-edit-table"
-              onClick={() => handleViewUserDetail(record)}
+              onClick={handleEditUserCallback(record)}
             />
           </Tooltip>
           <Tooltip title="Xóa">
@@ -261,9 +304,9 @@ const UserPage = () => {
                     <Typography.Title level={5} style={{ margin: '0' }}>Danh sách người dùng</Typography.Title>
                   </Col>
                   <Col style={{ display: 'flex', gap: '10px' }}>
-                    <Button className='btn-export' icon={<BiExport />}>Export</Button>
-                    <Button className='btn-import' icon={<BiImport />}>Import</Button>
-                    <Button className='btn-add' icon={<BsPersonAdd />}>Thêm mới</Button>
+                    <Button className='btn-export' icon={<BiExport />} onClick={handleExportExcel}>Export</Button>
+                    <Button className='btn-import' icon={<BiImport />} onClick={() => setOpenModalImportUser(true)}>Import</Button>
+                    <Button className='btn-add' icon={<BsPersonAdd />} onClick={handleModalAddUser}>Thêm mới</Button>
                     <Button type="text" icon={<GrRefresh />} onClick={handleRefresh} />
                   </Col>
                 </Row>
@@ -292,9 +335,25 @@ const UserPage = () => {
               defaultPageSize={queryUsers.pageSize}
             />
           </Col>
-        </Row>
-      </Layout>
-      <UserDetail openViewDetail={openViewDetail} dataUserDetail={dataUserDetail} handleCloseViewDetail={handleCloseViewDetail} />
+        </Row >
+      </Layout >
+      <UserDetail
+        openViewDetail={openViewDetail}
+        dataUserDetail={dataUserDetail}
+        handleCloseViewDetail={handleCloseViewDetail}
+      />
+      <ModalUser
+        openModal={openModalUser}
+        actionModal={actionModalUser}
+        dataUserDetail={dataUserDetail}
+        handleSaveModalUser={handleSaveModalUser}
+        handleCloseModalUser={handleCloseModalUser}
+      />
+      <ModalImportUser
+        openModal={openModalImportUser}
+        handleSaveModalImportUser={handleSaveModalImportUser}
+        handleCloseModalImportUser={handleCloseModalImportUser}
+      />
     </>
   )
 }

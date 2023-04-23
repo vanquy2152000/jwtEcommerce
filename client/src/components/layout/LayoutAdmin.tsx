@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Dropdown, Layout, MenuProps, Space, message, theme } from 'antd'
+import { Avatar, Dropdown, Layout, MenuProps, Space, message, theme } from 'antd'
 import { Content, Header } from 'antd/es/layout/layout';
 import { DownOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import './LayoutAdmin.scss';
@@ -13,6 +13,7 @@ const LayoutAdmin = () => {
     const [collapsed, setCollapsed] = useState<boolean>(false);
     const isAuthenticated = useSelector((state: any) => state.account.isAuthenticated)
     const user = useSelector((state: any) => state.account.user)
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -47,6 +48,7 @@ const LayoutAdmin = () => {
                     collapsed ?
                         {
                             marginLeft: 80,
+                            width: '50%',
                             height: "100vh",
                             transition: "margin-left 0.5s"
                         }
@@ -58,7 +60,20 @@ const LayoutAdmin = () => {
                         }
                 }
             >
-                <Header className="admin-header">
+                <Header className="admin-header"
+                    style={
+                        collapsed ?
+                            {
+                                width: '95%',
+                                transition: "margin-right 0.1s"
+                            }
+                            :
+                            {
+                                width: '86%',
+                                transition: "margin-right 0.1s"
+                            }
+                    }
+                >
                     <div className="leftside">
                         <div>
                             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -66,10 +81,8 @@ const LayoutAdmin = () => {
                                 onClick: () => setCollapsed(!collapsed),
                             })}
                         </div>
-                        {/* <div>
-                                <BreadcrumbComponent />
-                            </div> */}
                     </div>
+                    
                     <div className="rightside">
                         {
                             user && isAuthenticated !== true
@@ -81,6 +94,7 @@ const LayoutAdmin = () => {
                                     <Dropdown menu={{ items }} trigger={['click']}>
                                         <span className="header-text" onClick={(e) => e.preventDefault()}>
                                             <Space>
+                                                <Avatar size={46} src={urlAvatar} />
                                                 <span>Welcome {user.fullName}</span>
                                                 <DownOutlined />
                                             </Space>
@@ -92,7 +106,8 @@ const LayoutAdmin = () => {
                 </Header>
                 <Content
                     style={{
-                        padding: 16,
+                        marginTop: 64,
+                        padding: '20px',
                         backgroundColor: '#ffffff'
                     }}
                 >

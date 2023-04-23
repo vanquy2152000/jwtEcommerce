@@ -101,3 +101,26 @@
         color: #ea4c89 !important;
     }
 }
+
+.btn-ok-modal {
+    background-color: #ea4c89 !important;
+    color: #fff !important;
+    font-weight: 500;
+    &:hover {
+        background-color: #fff !important;
+        border-color: #fff;
+        border: 1px solid #ea4c89 !important;
+        color: #ea4c89 !important;
+    }
+}
+.btn-cancel-modal {
+    background-color: #fff;
+    color: darkgray;
+    font-weight: 500;
+    border: 1px dashed #ccc !important;
+    &:hover {
+        background-color: #fff !important;
+        border-color: #fff;
+        border: 1px dashed #33ccff !important;
+    }
+}
