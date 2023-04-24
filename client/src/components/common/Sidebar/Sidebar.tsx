@@ -6,8 +6,8 @@ import { RiMoneyDollarCircleLine } from 'react-icons/ri'
 import { FaReact } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
 import './Sidebar.scss'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 
 type Props = {
     collapsed: boolean,
@@ -18,7 +18,7 @@ type SidebarItem = {
     icon?: JSX.Element,
     label: JSX.Element,
     children?: { key?: string, label: JSX.Element, icon?: JSX.Element }[],
-    danger?: boolean
+    danger?: boolean,
 }
 
 const items: SidebarItem[] = [
@@ -45,10 +45,12 @@ const items: SidebarItem[] = [
     },
     {
         icon: <TbBooks />,
+        key: 'book',
         label: <Link to='/admin/book'>Manage Books</Link>,
     },
     {
         icon: <RiMoneyDollarCircleLine />,
+        key: 'order',
         label: <Link to='/admin/order'>Manage Orders</Link>,
     },
     {
@@ -62,9 +64,13 @@ const Sidebar = ({ collapsed }: Props) => {
         token: { colorBgContainer },
     } = theme.useToken();
 
-    const [activeMenu, setActiveMenu] = useState<string>('dashboard');
+    const [activeMenu, setActiveMenu] = useState<string>(localStorage.getItem("activeMenu") || "dashboard");
 
-    console.log(activeMenu)
+    const handleMenuClick = (e: any) => {
+        setActiveMenu(e.key);
+        localStorage.setItem("activeMenu", e.key);
+    }
+
 
     return (
         <Sider
@@ -91,10 +97,10 @@ const Sidebar = ({ collapsed }: Props) => {
             </div>
             <Menu
                 mode="inline"
-                defaultSelectedKeys={[activeMenu]}
                 selectedKeys={[activeMenu]}
-                onClick={(e) => setActiveMenu(e.key)}
+                onClick={handleMenuClick}
                 items={items}
+            // key={activeMenu}
             />
         </Sider >
     )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Avatar, Dropdown, Layout, MenuProps, Space, message, theme } from 'antd'
@@ -39,6 +39,11 @@ const LayoutAdmin = () => {
             navigate('/')
         }
     }
+    useEffect(() => {
+        if (window.location.pathname.startsWith('/admin')) {
+            localStorage.removeItem("activeMenu");
+        }
+    }, []);
 
     return (
         <Layout style={{ minHeight: '100vh' }} hasSider>
@@ -82,7 +87,7 @@ const LayoutAdmin = () => {
                             })}
                         </div>
                     </div>
-                    
+
                     <div className="rightside">
                         {
                             user && isAuthenticated !== true

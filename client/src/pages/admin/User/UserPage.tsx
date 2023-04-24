@@ -1,5 +1,5 @@
 import * as XLSX from 'xlsx';
-import InputSearch from '../../../components/common/Admin/User/Search/InputSearch'
+import InputSearch from '../../../components/common/Admin/Search/InputSearch'
 import UserDetail from '../../../components/common/Admin/User/UserDetail';
 import ModalUser from '../../../components/common/Admin/User/ModalUser';
 import ModalImportUser from '../../../components/common/Admin/User/DataExcel/ModalImportUser';
@@ -42,13 +42,14 @@ const confirmationPopup = (param: ConfirmationPopupParams) => {
 
 const UserPage = () => {
   const [loadings, setLoadings] = useState<boolean[]>([])
-  const [queryUsers, setQueryUsers] = useState({ currentPage: 1, pageSize: 5, total: 0, filter: '', sortQuery: '' })
+  const [queryUsers, setQueryUsers] = useState({ currentPage: 1, pageSize: 5, total: 0, filter: '', sortQuery: 'sort=-updatedAt' })
   const [listUsers, setListUsers] = useState<IUsers[]>([])
   const [openViewDetail, setOpenViewDetail] = useState<boolean>(false)
   const [dataUserDetail, setDataUserDetail] = useState<IUsers>()
   const [openModalUser, setOpenModalUser] = useState<boolean>(false)
   const [openModalImportUser, setOpenModalImportUser] = useState<boolean>(false)
   const [actionModalUser, setActionModalUser] = useState<string>('CREATE')
+  const actionEnum = 'USER'
 
   const enterLoading = (index: number) => {
     setLoadings((prevLoadings) => {
@@ -251,18 +252,18 @@ const UserPage = () => {
       width: "10%",
       render: (_: any, record: IUsers, __: number) => (
         <Row style={{ gap: '10px', justifyContent: 'center', alignItems: 'center' }}>
-          <Tooltip title="Chi tiết">
-            <Button
-              icon={<AiOutlineEdit />}
-              className="btn-edit-table"
-              onClick={handleEditUserCallback(record)}
-            />
-          </Tooltip>
           <Tooltip title="Xóa">
             <Button
               icon={<BsTrash />}
               className="btn-delete-table"
               onClick={getHandleDeleteUsersCallback(record)}
+            />
+          </Tooltip>
+          <Tooltip title="Chi tiết">
+            <Button
+              icon={<AiOutlineEdit />}
+              className="btn-edit-table"
+              onClick={handleEditUserCallback(record)}
             />
           </Tooltip>
         </Row>
@@ -293,7 +294,7 @@ const UserPage = () => {
       <Layout className='user-container'>
         <Row gutter={[20, 20]}>
           <Col span={24}>
-            <InputSearch handleSearch={handleSearch} handleClear={handleClear} />
+            <InputSearch actionEnum={actionEnum} handleSearch={handleSearch} handleClear={handleClear} />
           </Col>
           <Col span={24}>
             <Table

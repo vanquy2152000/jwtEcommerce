@@ -1,29 +1,47 @@
 import { Button, Col, Form, Input, Row, theme } from 'antd'
 import { RiSearchLine } from 'react-icons/ri'
 import { MdOutlineClear } from 'react-icons/md'
-import '../../../../../scss/custom-button.scss'
+import '../../../../scss/custom-button.scss'
 
 type Props = {
+    actionEnum: string
     handleSearch: (query: string) => void
     handleClear: () => void
 }
 
-const InputSearch = ({ handleSearch, handleClear }: Props) => {
+const InputSearch = ({ actionEnum, handleSearch, handleClear }: Props) => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
         let query = ''
-        if (values.fullName) {
-            query += `&fullName=/${values.fullName}/i`
+        if (actionEnum === 'USER') {
+            if (values.fullName) {
+                query += `&fullName=/${values.fullName}/i`
+            }
+            if (values.email) {
+                query += `&email=/${values.email}/i`
+            }
+            if (values.phone) {
+                query += `&phone=/${values.phone}/i`
+            }
+            if (query) {
+                handleSearch(query)
+            }
         }
-        if (values.email) {
-            query += `&email=/${values.email}/i`
-        }
-        if (values.phone) {
-            query += `&phone=/${values.phone}/i`
-        }
-        if (query) {
-            handleSearch(query)
+        if (actionEnum === 'BOOK') {
+            if (values.mainText) {
+                query += `&mainText=/${values.mainText}/i`
+            }
+            if (values.author) {
+                query += `&author=/${values.author}/i`
+            }
+            if (values.category) {
+                query += `&category=/${values.category}/i`
+            }
+            if (query) {
+                handleSearch(query)
+            }
+
         }
     }
 
@@ -42,8 +60,8 @@ const InputSearch = ({ handleSearch, handleClear }: Props) => {
                 <Col span={8}>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        name='fullName'
-                        label='Name'
+                        name={actionEnum === 'USER' ? 'fullName' : 'mainText'}
+                        label={actionEnum === 'USER' ? 'Name' : 'Tên sách'}
                     >
                         <Input />
                     </Form.Item>
@@ -52,8 +70,8 @@ const InputSearch = ({ handleSearch, handleClear }: Props) => {
                 <Col span={8}>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        name='email'
-                        label='Email'
+                        name={actionEnum === 'USER' ? 'email' : 'author'}
+                        label={actionEnum === 'USER' ? 'Email' : 'Tên tác giả'}
                     >
                         <Input />
                     </Form.Item>
@@ -62,8 +80,8 @@ const InputSearch = ({ handleSearch, handleClear }: Props) => {
                 <Col span={8}>
                     <Form.Item
                         labelCol={{ span: 24 }}
-                        name='phone'
-                        label='Số điện thoại'
+                        name={actionEnum === 'USER' ? 'phone' : 'category'}
+                        label={actionEnum === 'USER' ? 'Số điện thoại' : 'Thể loại'}
                     >
                         <Input />
                     </Form.Item>

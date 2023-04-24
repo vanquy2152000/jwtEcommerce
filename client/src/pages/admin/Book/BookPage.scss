@@ -1,0 +1,9 @@
+.book-container {
+    background-color: #fff;
+    .header-book {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 20px;
+    }
+}
