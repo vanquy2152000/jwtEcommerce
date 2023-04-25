@@ -129,7 +129,7 @@ const UserPage = () => {
       enterLoading(1)
       setQueryUsers({ ...queryUsers, total: queryUsers.total - 1 })
       message.success("Xóa Thành Công")
-      setListUsers(listUsers.filter((item) => item._id !== record._id))
+      fetchUser()
     }
   }, [])
 

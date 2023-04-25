@@ -19,6 +19,7 @@ import './BookPage.scss'
 import '../../../scss/custom-table.scss'
 import moment from 'moment';
 import BookDetail from '../../../components/common/Admin/Book/BookDetail';
+import ModalBook from '../../../components/common/Admin/Book/ModalBook';
 
 const { confirm } = Modal;
 
@@ -366,13 +367,13 @@ const BookPage = () => {
         dataBookDetail={dataBookDetail}
         handleCloseViewDetail={handleCloseViewDetail}
       />
-      {/* <ModalBook
+      <ModalBook
         openModal={openModalBook}
         actionModal={actionModalBook}
         dataBookDetail={dataBookDetail}
         handleSaveModalBook={handleSaveModalBook}
         handleCloseModalBook={handleCloseModalBook}
-      /> */}
+      />
     </>
   )
 }

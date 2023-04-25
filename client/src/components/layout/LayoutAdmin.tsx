@@ -39,12 +39,7 @@ const LayoutAdmin = () => {
             navigate('/')
         }
     }
-    useEffect(() => {
-        if (window.location.pathname.startsWith('/admin')) {
-            localStorage.removeItem("activeMenu");
-        }
-    }, []);
-
+    
     return (
         <Layout style={{ minHeight: '100vh' }} hasSider>
             <Sidebar collapsed={collapsed} />

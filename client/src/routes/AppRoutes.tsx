@@ -14,6 +14,7 @@ import DashboardPage from '../pages/admin/Dashboard/DashboardPage';
 import UserPage from '../pages/admin/User/UserPage';
 import BookPage from '../pages/admin/Book/BookPage';
 import OrderPage from '../pages/admin/Order/OrderPage';
+import { useEffect } from 'react';
 type Props = {}
 
 const AppRoutes = (props: Props) => {
@@ -71,6 +72,13 @@ const AppRoutes = (props: Props) => {
             element: <RegisterPage />
         },
     ]);
+
+    useEffect(() => {
+        const pathname = window.location.pathname;
+        if (!pathname.startsWith('/admin')) {
+            localStorage.removeItem('activeMenu');
+        }
+    }, []);
 
     return (
         <>

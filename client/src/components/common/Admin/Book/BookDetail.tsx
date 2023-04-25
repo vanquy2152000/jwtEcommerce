@@ -81,6 +81,8 @@ const BookDetail = ({ openViewDetail, dataBookDetail, handleCloseViewDetail }: P
                 <Descriptions.Item label="Tên sách">{dataBookDetail?.mainText}</Descriptions.Item>
                 <Descriptions.Item label="Tác giả">{dataBookDetail?.author}</Descriptions.Item>
                 <Descriptions.Item label="Giá tiền">{dataBookDetail?.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</Descriptions.Item>
+                <Descriptions.Item label="Số lượng">{dataBookDetail?.quantity}</Descriptions.Item>
+                <Descriptions.Item label="Đã bán">{dataBookDetail?.sold}</Descriptions.Item>
                 <Descriptions.Item label="Thể loại" span={2}>
                     <Badge color='#ea4c89' text={dataBookDetail?.category} />
                 </Descriptions.Item>
