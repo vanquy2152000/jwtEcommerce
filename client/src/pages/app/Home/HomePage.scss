@@ -1,0 +1,30 @@
+.home-container {
+    background-color: #fff;
+    margin: 20px;
+    .home-left-sidebar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 12px 12px rgb(0 0 0 / 5%);
+        margin-right: 10px;
+        .ant-rate-text {
+            margin-left: 5px;
+        }
+    }
+    .home-right-content {
+        box-shadow: 0 2px 12px 12px rgb(0 0 0 / 5%);
+        background-color: #ffffff;
+        .home-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+            gap: 20px 6px;
+            .rating {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+    }
+}
+.ant-card-body {
+    padding: 10px !important;
+}

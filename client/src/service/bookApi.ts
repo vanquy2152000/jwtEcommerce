@@ -9,6 +9,10 @@ export const getListBooksWithPaginate = (query: string) => {
     return axios.get(`/api/v1/book?${query}`)
 }
 
+export const getBookDetail = (bookId: string) => {
+    return axios.get(`/api/v1/book/${bookId}`)
+}
+
 export const postAddBook = (addBook: IAddUpdateBook) => {
     return axios.post(`/api/v1/book`, { ...addBook })
 }

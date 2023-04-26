@@ -1,6 +1,5 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
-import Footer from '../common/Footer/Footer'
-import { Header } from 'antd/es/layout/layout'
+import { Footer, Header } from 'antd/es/layout/layout'
 import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar } from 'antd'
 import { DownOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 import { FaReact } from 'react-icons/fa';
@@ -88,7 +87,7 @@ const LayoutApp = () => {
                 }
             </Header>
             <Outlet />
-            <Footer />
+            <Footer style={{ backgroundColor: '#fff', margin: '0 auto' }}>dsds</Footer>
         </Layout >
     )
 }

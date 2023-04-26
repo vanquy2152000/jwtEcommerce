@@ -1,8 +1,8 @@
-import Home from '../pages/home/HomePage';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import Home from '../pages/app/Home/HomePage';
+import { Link, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import LoginPage from '../pages/login/LoginPage';
-import Contact from '../pages/contact/ContactPage';
-import Book from '../pages/book/BookPage';
+import Contact from '../pages/app/Contact/ContactPage';
+import Book from '../pages/app/Book/BookPage';
 import RegisterPage from '../pages/register/RegisterPage';
 import NotFound from '../components/common/Found/NotFound';
 import LayoutAdmin from '../components/layout/LayoutAdmin';
@@ -15,9 +15,8 @@ import UserPage from '../pages/admin/User/UserPage';
 import BookPage from '../pages/admin/Book/BookPage';
 import OrderPage from '../pages/admin/Order/OrderPage';
 import { useEffect } from 'react';
-type Props = {}
 
-const AppRoutes = (props: Props) => {
+const AppRoutes = () => {
     const isLoading = useSelector((state: any) => state?.account.isLoading)
 
     const router = createBrowserRouter([
@@ -75,7 +74,7 @@ const AppRoutes = (props: Props) => {
 
     useEffect(() => {
         const pathname = window.location.pathname;
-        if (!pathname.startsWith('/admin')) {
+        if (pathname.startsWith('/') && !pathname.startsWith('/admin')) {
             localStorage.removeItem('activeMenu');
         }
     }, []);

@@ -17,17 +17,23 @@ const LayoutAdmin = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
+
+
     const items: MenuProps['items'] = [
         {
-            label: <Link to="#">Quản lí tài khoản</Link>,
+            label: <Link to="/" onClick={() => localStorage.removeItem('activeMenu')}>Trang chủ sản phẩm</Link>,
             key: '0',
+        },
+        {
+            label: <Link to="#">Quản lí tài khoản</Link>,
+            key: '1',
         },
         {
             type: 'divider',
         },
         {
             label: <span onClick={() => handleLogOut()}>Log Out</span>,
-            key: '1',
+            key: '2',
         },
     ];
 
@@ -39,7 +45,7 @@ const LayoutAdmin = () => {
             navigate('/')
         }
     }
-    
+
     return (
         <Layout style={{ minHeight: '100vh' }} hasSider>
             <Sidebar collapsed={collapsed} />
@@ -91,7 +97,7 @@ const LayoutAdmin = () => {
                                         Tài khoản
                                     </span>
                                 ) : (
-                                    <Dropdown menu={{ items }} trigger={['click']}>
+                                    <Dropdown menu={{ items }} trigger={['click']} >
                                         <span className="header-text" onClick={(e) => e.preventDefault()}>
                                             <Space>
                                                 <Avatar size={46} src={urlAvatar} />

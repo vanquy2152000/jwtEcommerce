@@ -1,8 +1,8 @@
 import * as XLSX from 'xlsx';
 import InputSearch from '../../../components/common/Admin/Search/InputSearch'
-// import BookDetail from '../../../components/common/Admin/Book/BookDetail';
-// import ModalBook from '../../../components/common/Admin/Book/ModalBook';
-// import ModalImportBook from '../../../components/common/Admin/Book/DataExcel/ModalImportBook';
+import moment from 'moment';
+import BookDetail from '../../../components/common/Admin/Book/BookDetail';
+import ModalBook from '../../../components/common/Admin/Book/ModalBook';
 import { Link } from 'react-router-dom';
 import { Button, Col, Layout, Modal, Pagination, Row, Table, Tooltip, Typography, message } from 'antd'
 import { useMemo } from 'react'
@@ -17,9 +17,6 @@ import { IBooks } from '../../../types/book';
 import { deleteBook, getListBooksWithPaginate } from '../../../service/bookApi';
 import './BookPage.scss'
 import '../../../scss/custom-table.scss'
-import moment from 'moment';
-import BookDetail from '../../../components/common/Admin/Book/BookDetail';
-import ModalBook from '../../../components/common/Admin/Book/ModalBook';
 
 const { confirm } = Modal;
 
@@ -87,17 +84,15 @@ const BookPage = () => {
       setQueryBooks({ ...queryBooks, total: res.data.meta.total })
       setListBooks(res.data.result)
     }
-
-    console.log(res)
   }
+  useEffect(() => {
+    fetchListBooks()
+  }, [queryBooks.currentPage, queryBooks.pageSize, queryBooks.filter, queryBooks.sortQuery])
 
   const baseIndex = useMemo(() => {
     return (queryBooks.currentPage - 1) * queryBooks.pageSize
   }, [queryBooks.currentPage, queryBooks.pageSize])
 
-  useEffect(() => {
-    fetchListBooks()
-  }, [queryBooks.currentPage, queryBooks.pageSize, queryBooks.filter, queryBooks.sortQuery])
 
   // search
   const handleSearch = async (query: string) => {
@@ -134,7 +129,7 @@ const BookPage = () => {
       enterLoading(1)
       setQueryBooks({ ...queryBooks, total: queryBooks.total - 1 })
       message.success("Xóa Thành Công")
-      setListBooks(listBooks.filter((item) => item._id !== record._id))
+      fetchListBooks()
     }
   }, [])
 
@@ -174,7 +169,7 @@ const BookPage = () => {
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     //let buffer = XLSX.write(workbook, { bookType: "xlsx", type: "buffer" });
     //XLSX.write(workbook, { bookType: "xlsx", type: "binary" });
-    XLSX.writeFile(workbook, "Danh sách người dùng.csv");
+    XLSX.writeFile(workbook, "Danh sách book.csv");
   }
 
   const baseColumns: ColumnsType<IBooks> = [
