@@ -31,7 +31,7 @@ const AppRoutes = () => {
                     element: <Contact />
                 },
                 {
-                    path: 'book',
+                    path: 'book/:slug',
                     element: <Book />
                 },
             ]

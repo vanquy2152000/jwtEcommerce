@@ -1,0 +1,54 @@
+@import "react-image-gallery/styles/scss/image-gallery.scss";
+
+.view-container {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    .original-image,
+    .thumbnail-image {
+        cursor: pointer;
+    }
+
+    .rating {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .price {
+        background-color: #f0f0f0;
+        padding: 40px;
+        font-size: 30px;
+        font-weight: 500;
+        line-height: 24px;
+        color: #ff9f00;
+        margin-top: 8px;
+    }
+    .delivery {
+        display: flex;
+        gap: 34px;
+    }
+    .quantity {
+        display: flex;
+        gap: 50px;
+    }
+    .buy {
+        display: flex;
+        gap: 10px;
+    }
+}
+
+.modal-gallery {
+    .active {
+        border: 2px solid #ee4d2d;
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        box-sizing: border-box;
+        top: 0;
+    }
+
+    .img-normal {
+        cursor: pointer;
+    }
+}
