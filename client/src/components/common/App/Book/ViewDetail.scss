@@ -7,6 +7,7 @@
     .original-image,
     .thumbnail-image {
         cursor: pointer;
+        height: 100%;
     }
 
     .rating {
@@ -39,6 +40,7 @@
 }
 
 .modal-gallery {
+    background-color: #fff;
     .active {
         border: 2px solid #ee4d2d;
         position: absolute;

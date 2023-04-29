@@ -52,7 +52,7 @@ const LayoutApp = () => {
     return (
         <Layout className='layout-app'>
             <Header className="header-layout">
-                <span className='header-logo'>
+                <span className='header-logo' onClick={() => navigate('/')}>
                     <FaReact className='rotate icon-react' />
                     <span>Ecommerce</span>
                 </span>

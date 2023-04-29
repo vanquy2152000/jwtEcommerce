@@ -10,7 +10,8 @@ export interface IBooks {
     category: string,
     createdAt: string,
     updatedAt: string,
-    __v: number
+    __v: number,
+    items?: any
 }
 
 export interface IAddUpdateBook {
