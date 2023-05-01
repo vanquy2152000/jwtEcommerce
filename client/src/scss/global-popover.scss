@@ -1,0 +1,20 @@
+.price {
+    font-size: 14px;
+    font-weight: 500;
+    color: #ff9f00;
+}
+
+.btn-buy-product {
+    color: #fff;
+    background-color: #ee4d2d;
+    border-color: #ee4d2d;
+    font-size: 14px;
+    height: 40px;
+    margin-top: 16px;
+    &:hover {
+        color: #fff !important;
+        background-color: #f16246 !important;
+        border: 1px solid #f16246 !important;
+        transform: translateY(-3px);
+    }
+}

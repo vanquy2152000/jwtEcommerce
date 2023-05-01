@@ -4,10 +4,12 @@ import { IBooks } from '../../../../types/book';
 import { BsCartPlus } from 'react-icons/bs';
 import { useState, useRef } from 'react';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Col, Input, Layout, Rate, Row, Typography } from 'antd'
+import { Button, Col, Input, InputNumber, Layout, Rate, Row, Typography, message } from 'antd'
 import './ViewDetail.scss'
 import '../../../../scss/custom-button.scss'
 import BookLoader from './BookLoader';
+import { useDispatch } from 'react-redux';
+import { doAddBookAction } from '../../../../redux/order/orderSlice';
 
 type Props = {
     dataBook?: IBooks
@@ -17,7 +19,10 @@ type Props = {
 const ViewDetail = ({ dataBook }: Props) => {
     const [openModalGallery, setOpenModalGallery] = useState<boolean>(false)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
+    const [currentQuantity, setCurrentQuantity] = useState<number>(1)
     const refGallery = useRef<any>(null)
+
+    const dispatch = useDispatch()
 
     const images = dataBook?.items ?? []
 
@@ -32,7 +37,34 @@ const ViewDetail = ({ dataBook }: Props) => {
     const handleOnClickImage = () => {
         setOpenModalGallery(true);
         console.log('check click image:', refGallery.current.getCurrentIndex() ?? 0)
-        // setCurrentIndex(refGallery.current.getCurrentIndex());
+    }
+
+    const handleChangeButton = (type: string) => {
+        if (type === 'MINUS') {
+            if (currentQuantity - 1 <= 0) return;
+            setCurrentQuantity(currentQuantity - 1)
+        }
+        if (type === 'PLUS') {
+            if (currentQuantity === +dataBook!.quantity) return;
+            setCurrentQuantity(currentQuantity + 1)
+        }
+    }
+    const handleChangeInput = (value: any) => {
+        // check xem gia tri nhap vao co phai la 1 so nguyen hay khong(isNaN)
+        if (!isNaN(value)) {
+            if (+value > 0 && +value <= +dataBook!.quantity) {
+                setCurrentQuantity(+value)
+            }
+            if (+value > 0 && value > +dataBook!.quantity) {
+                setCurrentQuantity(dataBook!.quantity)
+                message.warning(`Vui lòng không nhập quá ${dataBook!.quantity} sản phẩm`)
+            }
+        }
+    }
+
+    const handleAddToCart = (currentQuantity: number, dataBook: IBooks) => {
+        console.log(currentQuantity)
+        dispatch(doAddBookAction({ currentQuantity, detail: dataBook, _id: dataBook._id }))
     }
 
     return (
@@ -79,13 +111,18 @@ const ViewDetail = ({ dataBook }: Props) => {
                                 <div className='quantity'>
                                     <Typography.Text  >Số lượng: </Typography.Text>
                                     <span className='quantity-right'>
-                                        <Button icon={<MinusOutlined />} />
-                                        <Input defaultValue={1} style={{ width: '20%' }} />
-                                        <Button icon={<PlusOutlined />} />
+                                        <Button icon={<MinusOutlined />} onClick={() => handleChangeButton('MINUS')} />
+                                        <InputNumber style={{ width: '20%' }} controls={false} value={currentQuantity} onChange={handleChangeInput} />
+                                        <Button icon={<PlusOutlined />} onClick={() => handleChangeButton('PLUS')} />
+                                        <span style={{ marginLeft: 10 }}>{dataBook!.quantity} sản phẩm có sẵn</span>
                                     </span>
                                 </div>
                                 <div className='buy'>
-                                    <Button className="btn-add-product" icon={<BsCartPlus />}>
+                                    <Button
+                                        className="btn-add-product"
+                                        icon={<BsCartPlus />}
+                                        onClick={() => handleAddToCart(currentQuantity, dataBook)}
+                                    >
                                         Thêm vào giỏ hàng
                                     </Button>
                                     <Button className="btn-buy-product">Mua ngay</Button>

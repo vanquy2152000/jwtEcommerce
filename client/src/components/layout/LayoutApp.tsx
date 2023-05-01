@@ -1,12 +1,13 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Footer, Header } from 'antd/es/layout/layout'
-import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar } from 'antd'
+import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar, Popover, Button, Typography, Image, Row } from 'antd'
 import { DownOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
 import { FaReact } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../service/authApi'
 import { doLogoutUser } from '../../redux/account/accountSlice'
 import './LayoutApp.scss'
+import '../../scss/global-popover.scss'
 
 const LayoutApp = () => {
     const isAuthenticated = useSelector((state: any) => state.account.isAuthenticated)
@@ -14,6 +15,34 @@ const LayoutApp = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
+    const carts = useSelector((state: any) => state.order.carts)
+    console.log(carts)
+
+    const text = <Typography.Text strong>Sản phẩm mới thêm</Typography.Text>;
+    const contentPopover = (
+        <>
+            {carts.map((item: any) => {
+                console.log(item)
+                return (
+                    <Row style={{ gap: 20 }}>
+                        <>
+                            <Image
+                                src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${item?.detail?.thumbnail}`}
+                                preview={false}
+                                width={50}
+                                height={50}
+                            />
+                            <Typography.Text>{item?.detail?.mainText}</Typography.Text>
+                            <div className='price'> {item?.detail?.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
+                        </>
+                    </Row>
+                )
+            })}
+            <Button htmlType='button' className='btn-buy-product'>
+                Xem giỏ hàng
+            </Button>
+        </>
+    );
 
     let items: MenuProps['items'] = [
         {
@@ -63,9 +92,17 @@ const LayoutApp = () => {
                 // onSearch={(value: any) => console.log(value)}
                 />
                 <span style={{ cursor: 'pointer' }}>
-                    <Badge count={5} size="small" overflowCount={10} >
-                        <ShoppingCartOutlined style={{ fontSize: '24px', color: '#ea4c89' }} />
-                    </Badge>
+                    <Popover
+                        placement="bottomRight"
+                        title={text}
+                        content={contentPopover}
+                        arrow={true}
+                        rootClassName='popover-carts'
+                    >
+                        <Badge count={carts.length ?? 0} size="small" overflowCount={10} showZero >
+                            <ShoppingCartOutlined style={{ fontSize: '24px', color: '#ea4c89' }} />
+                        </Badge>
+                    </Popover>
                 </span>
                 {
                     user && isAuthenticated !== true

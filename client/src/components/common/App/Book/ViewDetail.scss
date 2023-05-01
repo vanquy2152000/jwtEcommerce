@@ -32,6 +32,12 @@
     .quantity {
         display: flex;
         gap: 50px;
+        .quantity-right {
+            display: flex;
+            .ant-input-number-input {
+                text-align: center;
+            }
+        }
     }
     .buy {
         display: flex;
