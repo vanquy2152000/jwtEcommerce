@@ -1,0 +1,9 @@
+.order-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .order-steps {
+        background-color: #fff;
+        padding: 20px;
+    }
+}

@@ -1,0 +1,22 @@
+.history-container {
+    margin: 20px;
+    .custom-table {
+        /* table */
+        .ant-table {
+            box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
+            font-size: 12px;
+        }
+        /* row data */
+
+        /* row tags */
+        .my-tag {
+            font-size: 12px;
+        }
+        .ant-table-thead > tr > th {
+            background-color: #fff;
+            height: 50px;
+            padding: 4px;
+            font-size: 16px;
+        }
+    }
+}

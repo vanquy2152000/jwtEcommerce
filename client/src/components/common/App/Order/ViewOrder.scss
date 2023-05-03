@@ -1,0 +1,45 @@
+.order-content {
+    .order-left {
+        .order-content {
+            background: #fff;
+            height: 100px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 0;
+            .order-icon {
+                font-size: 16px;
+                color: red;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .order-right {
+        background-color: #fff;
+        .order-bill {
+            padding: 20px;
+            height: 100%;
+            .order-provisional {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .order-price {
+                    font-size: 22px;
+                    font-weight: 500;
+                    color: #ff9f00;
+                }
+            }
+            .order-sum {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .order-price {
+                    font-size: 22px;
+                    font-weight: 500;
+                    color: #ff9f00;
+                }
+            }
+        }
+    }
+}

@@ -4,7 +4,11 @@
     color: #ff9f00;
 }
 
-.btn-buy-product {
+.btn-view-product {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
     color: #fff;
     background-color: #ee4d2d;
     border-color: #ee4d2d;
@@ -17,4 +21,33 @@
         border: 1px solid #f16246 !important;
         transform: translateY(-3px);
     }
+}
+.btn-view-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    border: hidden;
+    font-size: 14px;
+    height: 40px;
+    margin-top: 16px;
+    // &:hover {
+    //     color: #fff !important;
+    //     background-color: #f16246 !important;
+    //     border: 1px solid #f16246 !important;
+    //     transform: translateY(-3px);
+    // }
+}
+.my-paragraph {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 400px; /* giới hạn độ rộng của container */
+}
+.my-paragraph1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px; /* giới hạn độ rộng của container */
 }

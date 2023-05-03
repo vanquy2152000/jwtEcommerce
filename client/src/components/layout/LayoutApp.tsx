@@ -8,23 +8,32 @@ import { logoutUser } from '../../service/authApi'
 import { doLogoutUser } from '../../redux/account/accountSlice'
 import './LayoutApp.scss'
 import '../../scss/global-popover.scss'
+import { useState } from 'react';
+import ModalManageAccount from '../common/App/History/ModalManageAccount';
 
 const LayoutApp = () => {
-    const isAuthenticated = useSelector((state: any) => state.account.isAuthenticated)
-    const user = useSelector((state: any) => state.account.user)
+    const [showAll, setShowAll] = useState<boolean>(false);
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
+    const user = useSelector((state: any) => state.account.user)
+    const isAuthenticated = useSelector((state: any) => state.account.isAuthenticated)
     const carts = useSelector((state: any) => state.order.carts)
-    console.log(carts)
+    const [showModalManageAccount, setShowModalManageAccount] = useState<boolean>(false)
+
+    const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
+
+    const visibleCarts = showAll ? carts : carts.slice(0, 6);
+
+    const handleViewMore = () => {
+        setShowAll(true);
+    };
 
     const text = <Typography.Text strong>Sản phẩm mới thêm</Typography.Text>;
     const contentPopover = (
         <>
-            {carts.map((item: any) => {
-                console.log(item)
+            {visibleCarts.map((item: any) => {
                 return (
-                    <Row style={{ gap: 20 }}>
+                    <Row style={{ gap: 20 }} key={item._id}>
                         <>
                             <Image
                                 src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${item?.detail?.thumbnail}`}
@@ -32,13 +41,30 @@ const LayoutApp = () => {
                                 width={50}
                                 height={50}
                             />
-                            <Typography.Text>{item?.detail?.mainText}</Typography.Text>
-                            <div className='price'> {item?.detail?.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</div>
+                            <Typography.Paragraph ellipsis={{ rows: 1, expandable: false }} className="my-paragraph">
+                                {item?.detail?.mainText}
+                            </Typography.Paragraph>
+                            <span className='price'>x{item.quantity}</span>
+                            <div className='price'>
+                                {item?.detail?.price.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+                            </div>
                         </>
                     </Row>
                 )
             })}
-            <Button htmlType='button' className='btn-buy-product'>
+
+            {carts.length > 6 && !showAll && (
+                <Button htmlType='button' className='btn-view-more' style={{ margin: 'auto' }} onClick={handleViewMore}>
+                    Xem thêm....
+                </Button>
+            )}
+
+            <Button
+                htmlType='button'
+                className='btn-view-product'
+                style={{ marginLeft: 'auto' }}
+                onClick={() => navigate('/order')}
+            >
                 Xem giỏ hàng
             </Button>
         </>
@@ -46,11 +72,11 @@ const LayoutApp = () => {
 
     let items: MenuProps['items'] = [
         {
-            label: <Link to="#">Quản lí tài khoản</Link>,
+            label: <div onClick={() => setShowModalManageAccount(true)}>Quản lí tài khoản</div>,
             key: '1',
         },
         {
-            label: <Link to='#'>Lịch sử mua hàng</Link>,
+            label: <Link to='/history'>Lịch sử mua hàng</Link>,
             key: '2',
         },
         {
@@ -77,55 +103,64 @@ const LayoutApp = () => {
             navigate('/')
         }
     }
+    const handleCloseModalManageAccount = () => {
+        setShowModalManageAccount(false)
+    }
 
     return (
-        <Layout className='layout-app'>
-            <Header className="header-layout">
-                <span className='header-logo' onClick={() => navigate('/')}>
-                    <FaReact className='rotate icon-react' />
-                    <span>Ecommerce</span>
-                </span>
-                <Input.Search
-                    placeholder="Tìm kiếm sản phẩm"
-                    style={{ width: '50%', height: 36 }}
-                // size="large"
-                // onSearch={(value: any) => console.log(value)}
-                />
-                <span style={{ cursor: 'pointer' }}>
-                    <Popover
-                        placement="bottomRight"
-                        title={text}
-                        content={contentPopover}
-                        arrow={true}
-                        rootClassName='popover-carts'
-                    >
-                        <Badge count={carts.length ?? 0} size="small" overflowCount={10} showZero >
-                            <ShoppingCartOutlined style={{ fontSize: '24px', color: '#ea4c89' }} />
-                        </Badge>
-                    </Popover>
-                </span>
-                {
-                    user && isAuthenticated !== true
-                        ? (
-                            <span className="header-text" onClick={() => navigate('/login')}>
-                                Tài khoản
-                            </span>
-                        ) : (
-                            <Dropdown menu={{ items }} trigger={['click']}>
-                                <span className="header-text" onClick={(e) => e.preventDefault()}>
-                                    <Space>
-                                        <Avatar size={46} src={urlAvatar} />
-                                        <span>Welcome {user.fullName}</span>
-                                        <DownOutlined />
-                                    </Space>
+        <>
+            <Layout className='layout-app'>
+                <Header className="header-layout">
+                    <span className='header-logo' onClick={() => navigate('/')}>
+                        <FaReact className='rotate icon-react' />
+                        <span>Ecommerce</span>
+                    </span>
+                    <Input.Search
+                        placeholder="Tìm kiếm sản phẩm"
+                        style={{ width: '50%', height: 36 }}
+                    // size="large"
+                    // onSearch={(value: any) => console.log(value)}
+                    />
+                    <span style={{ cursor: 'pointer' }}>
+                        <Popover
+                            placement="bottomRight"
+                            title={text}
+                            content={contentPopover}
+                            arrow={true}
+                            rootClassName='popover-carts'
+                        >
+                            <Badge count={carts.length ?? 0} size="small" overflowCount={10} showZero >
+                                <ShoppingCartOutlined style={{ fontSize: '24px', color: '#ea4c89' }} />
+                            </Badge>
+                        </Popover>
+                    </span>
+                    {
+                        user && isAuthenticated !== true
+                            ? (
+                                <span className="header-text" onClick={() => navigate('/login')}>
+                                    Tài khoản
                                 </span>
-                            </Dropdown>
-                        )
-                }
-            </Header>
-            <Outlet />
-            <Footer style={{ backgroundColor: '#fff', margin: '0 auto' }}>dsds</Footer>
-        </Layout >
+                            ) : (
+                                <Dropdown menu={{ items }} trigger={['click']}>
+                                    <span className="header-text" onClick={(e) => e.preventDefault()}>
+                                        <Space>
+                                            <Avatar size={46} src={urlAvatar} />
+                                            <span>Welcome {user.fullName}</span>
+                                            <DownOutlined />
+                                        </Space>
+                                    </span>
+                                </Dropdown>
+                            )
+                    }
+                </Header>
+                <Outlet />
+                <Footer style={{ backgroundColor: '#fff', margin: '0 auto' }}>dsds</Footer>
+            </Layout >
+            <ModalManageAccount
+                openModal={showModalManageAccount}
+                handleCloseModal={handleCloseModalManageAccount}
+            />
+        </>
     )
 }
 

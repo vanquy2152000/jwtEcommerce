@@ -38,6 +38,31 @@ export const orderSlice = createSlice({
             // update redux
             state.carts = carts;
         },
+        doUpdateCartAction: (state, action) => {
+            let carts = state.carts
+
+            const item = action.payload
+
+            let isExistIndex = carts.findIndex(c => c._id === item._id)
+
+            if (isExistIndex > -1) {
+                carts[isExistIndex].quantity = item.quantity
+                if (carts[isExistIndex].quantity > carts[isExistIndex].detail.quantity) {
+                    carts[isExistIndex].quantity = carts[isExistIndex].detail.quantity
+                }
+            } else {
+                carts.push({ quantity: item.currentQuantity, _id: item._id, detail: item.detail })
+            }
+
+            // update redux
+            state.carts = carts;
+        },
+        doDeleteCartAction: (state, action) => {
+            state.carts = state.carts.filter(c => c._id !== action.payload._id)
+        },
+        doPlaceOrderAction: (state) => {
+            state.carts = []
+        },
 
         extraReducers: (builder) => {
 
@@ -45,6 +70,6 @@ export const orderSlice = createSlice({
     }
 });
 
-export const { doAddBookAction } = orderSlice.actions;
+export const { doAddBookAction, doUpdateCartAction, doDeleteCartAction, doPlaceOrderAction } = orderSlice.actions;
 
 export default orderSlice.reducer;
