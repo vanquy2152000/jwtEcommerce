@@ -1,4 +1,4 @@
-import { IAddUser, IAddUserMulti, IUpdateUser } from "../types/user";
+import { IAddUser, IAddUserMulti, IChangePassword, IUpdateUser } from "../types/user";
 import axios from "../utils/axios-customize";
 
 export const getAllUser = () => {
@@ -22,4 +22,23 @@ export const putUpdateUser = (updateUser: IUpdateUser) => {
 }
 export const deleteUser = (userId: string) => {
     return axios.delete(`/api/v1/user/${userId}`)
+}
+
+export const postUploadAvatar = (fileImg: any) => {
+    const bodyFormData = new FormData()
+    bodyFormData.append('fileImg', fileImg)
+
+    return axios.post(
+        `/api/v1/file/upload`,
+        bodyFormData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "upload-type": "avatar"
+            }
+        })
+}
+
+export const postChangePassword = (changePassword: IChangePassword) => {
+    return axios.post(`/api/v1/user/change-password`, {...changePassword})
 }

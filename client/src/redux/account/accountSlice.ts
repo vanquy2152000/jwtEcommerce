@@ -13,12 +13,14 @@ interface IUser {
 interface AccountState {
   isAuthenticated: boolean;
   isLoading: boolean;
+  tempAvatar: string
   user: IUser
 }
 
 const initialState: AccountState = {
   isAuthenticated: false,
   isLoading: true,
+  tempAvatar: "",
   user: {
     email: "",
     phone: "",
@@ -26,7 +28,7 @@ const initialState: AccountState = {
     role: "",
     avatar: "",
     id: ""
-  }
+  },
 };
 
 export const accountSlice = createSlice({
@@ -54,6 +56,14 @@ export const accountSlice = createSlice({
         avatar: "",
         id: ""
       }
+    },
+    doUpdateUserInfoAction: (state, action) => {
+      state.user.avatar = action.payload.avatar
+      state.user.phone = action.payload.phone
+      state.user.fullName = action.payload.fullName
+    },
+    doUploadAvatarAction: (state, action) => {
+      state.tempAvatar = action.payload.avatar
     }
   },
 
@@ -62,6 +72,6 @@ export const accountSlice = createSlice({
   },
 });
 
-export const { doLoginUser, doGetAccountAction, doLogoutUser } = accountSlice.actions;
+export const { doLoginUser, doGetAccountAction, doLogoutUser, doUpdateUserInfoAction, doUploadAvatarAction } = accountSlice.actions;
 
 export default accountSlice.reducer;

@@ -24,8 +24,14 @@ export interface IAddUserMulti {
 }[]
 
 export interface IUpdateUser {
-    _id?: string,
+    _id: string,
     fullName?: string,
     phone?: string,
     avatar?: string
+}
+
+export interface IChangePassword {
+    email: string,
+    oldpass: string,
+    newpass: string
 }

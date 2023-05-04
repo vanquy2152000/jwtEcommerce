@@ -28,20 +28,23 @@ const ModalManageAccount = ({ openModal, handleCloseModal }: Props) => {
     ]
 
     return (
-        <Modal
-            open={openModal}
-            onCancel={handleCloseModal}
-            title={<Typography.Title level={4} style={{ margin: 0 }}>Quản lí tài khoản</Typography.Title>}
-            maskClosable={false}
-            width={'60vw'}
-            okButtonProps={{ className: 'btn-ok-modal' }}
-            cancelButtonProps={{ className: 'btn-cancel-modal' }}
-        >
-            <Tabs
-                defaultActiveKey='info'
-                items={items}
-            />
-        </Modal>
+        <>
+            <Modal
+                open={openModal}
+                onCancel={handleCloseModal}
+                title={<Typography.Title level={4} style={{ margin: 0 }}>Quản lí tài khoản</Typography.Title>}
+                maskClosable={false}
+                width={'60vw'}
+                footer={null}
+
+            >
+                <Tabs
+                    defaultActiveKey='info'
+                    items={items}
+                />
+            </Modal>
+
+        </>
     )
 }
 
