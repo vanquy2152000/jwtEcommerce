@@ -94,23 +94,24 @@ const RegisterPage = () => {
                     />
                 </Form.Item>
 
-                <Form.Item >
+                <Form.Item>
                     <Button
                         type="primary"
                         htmlType="submit"
                         className="btn-register"
                         loading={loadings[1]}
                     >
-                        Create Account
+                        Đăng kí
                     </Button>
                 </Form.Item>
                 <Divider>Or</Divider>
-                <Typography.Text strong >
+                <Typography.Text strong>
                     <span>Bạn đã có tài khoản? </span>
                     <Link to={'/login'} style={{ textDecoration: 'underline' }}>
                         Login
                     </Link>
                 </Typography.Text>
+
             </Form>
         </Layout >
     )

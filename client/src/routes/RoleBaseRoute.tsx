@@ -13,7 +13,7 @@ const RoleBaseRoute = (props: Props) => {
     return (
         <>
             {
-                isAdminRoute && userRole === 'ADMIN'
+                isAdminRoute && userRole === 'ADMIN' || !isAdminRoute && (userRole === 'USER' || userRole === 'ADMIN')
                     ? (
                         <>
                             {props.children}

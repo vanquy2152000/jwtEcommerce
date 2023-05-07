@@ -11,26 +11,10 @@ import { useState } from 'react'
 const LoginPage = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [loadings, setLoadings] = useState<boolean[]>([])
-
-    const enterLoading = (index: number) => {
-        setLoadings((prevLoadings) => {
-            const newLoadings = [...prevLoadings];
-            newLoadings[index] = true;
-            return newLoadings;
-        });
-
-        setTimeout(() => {
-            setLoadings((prevLoadings) => {
-                const newLoadings = [...prevLoadings];
-                newLoadings[index] = false;
-                return newLoadings;
-            });
-        }, 3000);
-    };
+    const [loading, setLoading] = useState<boolean>(false)
 
     const onFinish = async (values: any) => {
-        enterLoading(1)
+        setLoading(true)
         const res = await loginUser(values)
 
         if (res && res.data) {
@@ -38,13 +22,17 @@ const LoginPage = () => {
             dispatch(doLoginUser(res.data.user))
             message.success('Đăng nhập thành công')
             navigate('/')
+            setLoading(false)
         } else {
-            notification.error({
-                message: 'Có lỗi xảy ra',
-                description:
-                    res.message && Array.isArray(res.message) ? res.message[0] : res.message,
-                duration: 5,
-            })
+            setTimeout(() => {
+                setLoading(false)
+                notification.error({
+                    message: 'Có lỗi xảy ra',
+                    description:
+                        res.message && Array.isArray(res.message) ? res.message[0] : res.message,
+                    duration: 5,
+                })
+            }, 2000)
         }
     }
 
@@ -85,9 +73,9 @@ const LoginPage = () => {
                         type="primary"
                         htmlType="submit"
                         className="btn-login"
-                        loading={loadings[1]}
+                        loading={loading}
                     >
-                        login
+                        Đăng nhập
                     </Button>
                 </Form.Item>
                 <Divider>Or</Divider>

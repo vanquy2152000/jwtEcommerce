@@ -72,11 +72,11 @@ const BookDetail = ({ openViewDetail, dataBookDetail, handleCloseViewDetail }: P
     return (
         <Drawer
             width='50vw'
-            title={<Typography.Title level={4} style={{ margin: 0 }}>Xem chi tiết người dùng</Typography.Title>}
+            title={<Typography.Title level={4} style={{ margin: 0 }}>Xem chi tiết sách</Typography.Title>}
             open={openViewDetail}
             onClose={handleCloseViewDetail}
         >
-            <Descriptions title={<Typography.Title level={5}>Thông tin người dùng</Typography.Title>} bordered column={2}>
+            <Descriptions title={<Typography.Title level={5}>Thông tin sách</Typography.Title>} bordered column={2}>
                 <Descriptions.Item label="Id">{dataBookDetail?._id}</Descriptions.Item>
                 <Descriptions.Item label="Tên sách">{dataBookDetail?.mainText}</Descriptions.Item>
                 <Descriptions.Item label="Tác giả">{dataBookDetail?.author}</Descriptions.Item>

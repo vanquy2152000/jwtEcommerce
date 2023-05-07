@@ -33,11 +33,17 @@ const AppRoutes = () => {
                 },
                 {
                     path: 'order',
-                    element: <Order />
+                    element:
+                        <PrivateRoute>
+                            <Order />
+                        </PrivateRoute>
                 },
                 {
                     path: 'history',
-                    element: <HistoryPage />
+                    element:
+                        <PrivateRoute>
+                            <HistoryPage />
+                        </PrivateRoute>
                 },
             ]
         },

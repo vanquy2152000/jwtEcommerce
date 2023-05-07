@@ -1,4 +1,4 @@
-import { Button, Card, Checkbox, Col, Divider, Form, Image, InputNumber, Layout, Pagination, Rate, Row, Spin, Tabs, TabsProps, Typography, message } from 'antd'
+import { Button, Card, Checkbox, Col, Divider, Empty, Form, Image, InputNumber, Layout, Pagination, Rate, Row, Spin, Tabs, TabsProps, Typography, message } from 'antd'
 import { FilterOutlined } from '@ant-design/icons'
 import { GrRefresh } from 'react-icons/gr'
 import { useForm } from 'antd/es/form/Form'
@@ -8,7 +8,7 @@ import { IBooks } from '../../../types/book'
 import { debounce } from 'lodash';
 import './HomePage.scss'
 import '../../../scss/custom-button.scss'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 
 const items: TabsProps['items'] = [
     {
@@ -40,6 +40,8 @@ const Home = () => {
     const [listBooks, setListBooks] = useState<IBooks[]>([])
     const [loadings, setLoadings] = useState<boolean[]>([])
     const [queryBooks, setQueryBooks] = useState({ currentPage: 1, pageSize: 12, total: 0, filter: '', sortQuery: 'sort=-sold' })
+
+    const [searchTerm, setSearchTerm] = useOutletContext<any>()
 
     const enterLoading = (index: number) => {
         setLoadings((prevLoadings) => {
@@ -79,6 +81,10 @@ const Home = () => {
                 query += `&${queryBooks.sortQuery}`
             }
 
+            if (searchTerm) {
+                query += `&mainText=/${searchTerm}/i`
+            }
+
             enterLoading(1)
             const res = await getListBooksWithPaginate(query)
 
@@ -88,7 +94,7 @@ const Home = () => {
             }
         }
         fetchListBooks()
-    }, [queryBooks.currentPage, queryBooks.pageSize, queryBooks.filter, queryBooks.sortQuery])
+    }, [searchTerm, queryBooks.currentPage, queryBooks.pageSize, queryBooks.filter, queryBooks.sortQuery])
 
     const onFinish = (values: any) => {
         console.log(values)
@@ -128,11 +134,12 @@ const Home = () => {
     const handlePageClick = (currentPage: number, pageSize: number) => {
         setQueryBooks({ ...queryBooks, currentPage: currentPage, pageSize: pageSize })
     }
+
     const handleRefresh = () => {
         form.resetFields()
         setQueryBooks({ ...queryBooks, filter: '' })
+        setSearchTerm('')
     }
-
     // convert url slug
     const nonAccentVietnamese = (str: string) => {
         str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
@@ -286,7 +293,7 @@ const Home = () => {
                                         className='home-tab'
                                     />
                                 </Row>
-                                <Row className='home-card'>
+                                <Row className={listBooks.length !== 0 ? 'home-card' : 'home-card-empty'}>
                                     {listBooks.map((item) => {
                                         return (
                                             <Card
@@ -315,7 +322,17 @@ const Home = () => {
                                             </Card>
                                         )
                                     })}
+
+                                    {
+                                        listBooks.length === 0 &&
+                                        <div style={{ background: '#fff', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Empty
+                                                description={'Không có sản phẩm '}
+                                            />
+                                        </div>
+                                    }
                                 </Row>
+
                             </Layout>
                         </Spin>
                         <Divider />

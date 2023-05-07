@@ -10,6 +10,7 @@ import '../../../../scss/custom-button.scss'
 import BookLoader from './BookLoader';
 import { useDispatch } from 'react-redux';
 import { doAddBookAction } from '../../../../redux/order/orderSlice';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
     dataBook?: IBooks
@@ -20,6 +21,7 @@ const ViewDetail = ({ dataBook }: Props) => {
     const [openModalGallery, setOpenModalGallery] = useState<boolean>(false)
     const [currentIndex, setCurrentIndex] = useState<number>(0)
     const [currentQuantity, setCurrentQuantity] = useState<number>(1)
+    const navigate = useNavigate()
     const refGallery = useRef<any>(null)
 
     const dispatch = useDispatch()
@@ -63,8 +65,12 @@ const ViewDetail = ({ dataBook }: Props) => {
     }
 
     const handleAddToCart = (currentQuantity: number, dataBook: IBooks) => {
-        console.log(currentQuantity)
         dispatch(doAddBookAction({ currentQuantity, detail: dataBook, _id: dataBook._id }))
+    }
+
+    const handleBuyNow = (currentQuantity: number, dataBook: IBooks) => {
+        dispatch(doAddBookAction({ currentQuantity, detail: dataBook, _id: dataBook._id }))
+        navigate('/order')
     }
 
     return (
@@ -125,7 +131,12 @@ const ViewDetail = ({ dataBook }: Props) => {
                                     >
                                         Thêm vào giỏ hàng
                                     </Button>
-                                    <Button className="btn-buy-product">Mua ngay</Button>
+                                    <Button
+                                        className="btn-buy-product"
+                                        onClick={() => handleBuyNow(currentQuantity, dataBook)}
+                                    >
+                                        Mua ngay
+                                    </Button>
                                 </div>
                             </Col>
                         </Col>

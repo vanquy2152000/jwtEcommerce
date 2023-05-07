@@ -1,35 +1,44 @@
 import moment from 'moment'
 import ReactJson from 'react-json-view'
-import { Layout, Table, Tag, Typography } from 'antd'
+import { Col, Layout, Pagination, Row, Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/es/table'
-import { IHistories } from '../../../types/history'
-import { useEffect, useState, useMemo } from 'react';
+import { IHistories } from '../../../types/history';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { getHistoryOrder } from '../../../service/historyApi'
 import './HistoryPage.scss'
 
-type Props = {}
-
-const HistoryPage = (props: Props) => {
+const HistoryPage = () => {
     const [listHistoryOrders, setListHistoryOrders] = useState<IHistories[]>([])
-    const [queryHistories, setQueryHistories] = useState({ currentPage: 1, pageSize: 5, total: 0 })
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [pageSize, setPageSize] = useState<number>(5)
 
+    const [loading, setLoading] = useState<boolean>(false)
+    const history = useRef<IHistories[]>([])
 
     const baseIndex = useMemo(() => {
-        return (queryHistories.currentPage - 1) * queryHistories.pageSize
-    }, [queryHistories.currentPage, queryHistories.pageSize])
+        return (currentPage - 1) * pageSize
+    }, [currentPage, pageSize])
 
     useEffect(() => {
         const fetchListHistories = async () => {
+            setLoading(true)
             const res = await getHistoryOrder()
-            console.log(res)
+
             if (res && res.data) {
                 setListHistoryOrders(res.data)
+                history.current = res.data
             }
+            setLoading(false)
         }
         fetchListHistories()
     }, [])
-    console.log(listHistoryOrders)
 
+    const handlePageTableClick = (currentPage: number, pageSize: number) => {
+        setCurrentPage(currentPage)
+        setPageSize(pageSize)
+        setListHistoryOrders(history.current)
+
+    }
     const baseColumns: ColumnsType<IHistories> = [
         {
             title: "Thời gian",
@@ -48,7 +57,6 @@ const HistoryPage = (props: Props) => {
             width: "10%",
             dataIndex: 'totalPrice',
             render: (_, record, __) => {
-                console.log(record)
                 return (
                     <span>
                         {record.totalPrice.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
@@ -61,7 +69,6 @@ const HistoryPage = (props: Props) => {
             width: "10%",
             dataIndex: 'status',
             render: (_, record, __) => {
-                console.log(record)
                 return (
                     <span>
                         <Tag color="green">Thành công</Tag>
@@ -101,21 +108,40 @@ const HistoryPage = (props: Props) => {
         result.push(jsonColumns)
         return result;
     }, [jsonColumns, numberColumns])
-
+    console.log(listHistoryOrders)
     return (
         <Layout className='history-container'>
-            <Table
-                bordered
-                title={() => (<Typography.Title level={5} style={{ margin: '0' }}>Lịch sử mua hàng</Typography.Title>)}
-                rowKey={record => record._id}
-                columns={columns}
-                dataSource={listHistoryOrders}
-                pagination={false}
-                // loading={loadings[1]}
-                className='custom-table'
-                style={{ borderRadius: '20px' }}
-            // onChange={handleTableChange}
-            />
+            <Row gutter={[20, 20]}>
+                <Col span={24}>
+                    <Table
+                        bordered
+                        title={() => (<Typography.Title level={5} style={{ margin: '0' }}>Lịch sử mua hàng</Typography.Title>)}
+                        rowKey={record => record._id}
+                        columns={columns}
+                        dataSource={listHistoryOrders.filter((item, index) => {
+                            const start = (currentPage - 1) * pageSize;
+                            const end = start + pageSize;
+                            return index >= start && index < end;
+                        })}
+                        pagination={false}
+                        loading={loading}
+                        className='custom-table'
+                        style={{ borderRadius: '20px' }}
+                    />
+                </Col>
+                <Col span={24}>
+                    <Pagination
+                        total={history.current.length}
+                        showTotal={(total) => `Tổng ${total} đơn hàng`}
+                        style={{ textAlign: "center", padding: 20 }}
+                        onChange={handlePageTableClick}
+                        current={currentPage}
+                        defaultCurrent={1}
+                        pageSize={pageSize}
+                    />
+                </Col>
+            </Row>
+
         </Layout>
     )
 }
