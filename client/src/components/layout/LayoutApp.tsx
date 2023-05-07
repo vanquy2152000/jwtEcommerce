@@ -2,19 +2,19 @@ import ModalManageAccount from '../common/App/User/ModalManageAccount';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Footer, Header } from 'antd/es/layout/layout'
 import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar, Popover, Button, Typography, Image, Row, Col } from 'antd'
-import { DownOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { FaReact } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../service/authApi'
 import { doLogoutUser } from '../../redux/account/accountSlice'
-import { useRef, useState } from 'react';
+import {  useState } from 'react';
 import './LayoutApp.scss'
 import '../../scss/global-popover.scss'
 import paypal from '../../assets/PaymentMethods/paypal.png'
 import bitcoin from '../../assets/PaymentMethods/bitcoin.png'
 import shopify from '../../assets/PaymentMethods/shopify.png'
 import visa from '../../assets/PaymentMethods/visa.png'
-import { debounce, throttle } from 'lodash';
+import { debounce } from 'lodash';
 
 const LayoutApp = () => {
     const navigate = useNavigate()
@@ -24,7 +24,6 @@ const LayoutApp = () => {
     const carts = useSelector((state: any) => state.order.carts)
     const [showAll, setShowAll] = useState<boolean>(false);
     const [searchTerm, setSearchTerm] = useState<string>("");
-    const inputRef = useRef(null);
 
     const [showModalManageAccount, setShowModalManageAccount] = useState<boolean>(false)
 

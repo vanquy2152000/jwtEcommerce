@@ -153,7 +153,7 @@ const Order = () => {
     return {
       title: "",
       dataIndex: "numericalOrder",
-      render(_: any, __: IBooks, index: any) {
+      render(_: any, __: IOrders, index: any) {
         return (
           <div style={{ textAlign: 'center' }}>
             {baseIndex + index + 1}

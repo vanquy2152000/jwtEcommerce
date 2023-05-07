@@ -4,7 +4,6 @@ import { Button, Result, Steps } from "antd"
 import { SmileOutlined } from "@ant-design/icons";
 import './OrderPage.scss'
 import '../../../scss/custom-button.scss'
-import BookPage from "../../admin/Book/BookPage";
 import PaymentOrder from "../../../components/common/App/Order/PaymentOrder";
 
 

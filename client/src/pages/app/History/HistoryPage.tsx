@@ -79,9 +79,8 @@ const HistoryPage = () => {
     ]
     const numberColumns = useMemo(() => {
         return {
-            title: "STT",
+            title: "",
             dataIndex: "numericalOrder",
-            align: "center",
             render: (_: any, __: IHistories, index: any) => {
                 return (
                     <div style={{ textAlign: 'center' }}>
@@ -92,6 +91,7 @@ const HistoryPage = () => {
             width: '4%'
         }
     }, [baseIndex])
+    
     const jsonColumns = useMemo(() => {
         return {
             title: "Chi tiết",
