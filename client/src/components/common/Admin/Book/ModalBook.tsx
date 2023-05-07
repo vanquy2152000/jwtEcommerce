@@ -199,8 +199,7 @@ const ModalBook = ({ openModal, actionModal, dataBookDetail, handleSaveModalBook
                 handleSaveModalBook()
             } else {
                 notification.error({
-                    message: 'Đã có lỗi xảy ra',
-                    description: res.message
+                    message: 'Đã có lỗi xảy ra'
                 })
             }
         }
@@ -208,12 +207,11 @@ const ModalBook = ({ openModal, actionModal, dataBookDetail, handleSaveModalBook
             const res = await putUpdateBook(actionPayload, dataBookDetail!._id)
 
             if (res && res.data) {
-                message.success('Cập nhật người dùng thành công')
+                message.success('Cập nhật thành công')
                 handleSaveModalBook()
             } else {
                 notification.error({
-                    message: 'Đã có lỗi xảy ra',
-                    description: res.message
+                    message: 'Đã có lỗi xảy ra'
                 })
             }
         }

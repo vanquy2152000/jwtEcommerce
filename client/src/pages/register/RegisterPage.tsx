@@ -36,7 +36,7 @@ const RegisterPage = () => {
             notification.error({
                 message: "Có lỗi xảy ra",
                 description:
-                    res.message && Array.isArray(res.message) ? res.message[0] : res.message,
+                    res && Array.isArray(res) ? res[0] : res,
                 duration: 5
             })
         }

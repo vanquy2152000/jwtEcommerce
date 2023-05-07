@@ -59,7 +59,6 @@ const ModalUser = ({ openModal, actionModal, dataUserDetail, handleSaveModalUser
             } else {
                 notification.error({
                     message: 'Đã có lỗi xảy ra',
-                    description: res.message
                 })
             }
         }
@@ -72,7 +71,6 @@ const ModalUser = ({ openModal, actionModal, dataUserDetail, handleSaveModalUser
             } else {
                 notification.error({
                     message: 'Đã có lỗi xảy ra',
-                    description: res.message
                 })
             }
         }

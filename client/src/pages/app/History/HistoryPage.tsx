@@ -82,7 +82,7 @@ const HistoryPage = () => {
             title: "STT",
             dataIndex: "numericalOrder",
             align: "center",
-            render(_: any, __: IHistories, index: any) {
+            render: (_: any, __: IHistories, index: any) => {
                 return (
                     <div style={{ textAlign: 'center' }}>
                         {baseIndex + index + 1}
@@ -98,7 +98,7 @@ const HistoryPage = () => {
             width: "30%",
             dataIndex: 'json',
             render: (_: any, record: IHistories, __: number) => (
-                <JSONPretty id="json-pretty" data={record.detail} name='Chi tiết đơn mua' collapsed={true} />
+                <JSONPretty id="json-pretty" data={record.detail} />
             )
         }
     }, [])
@@ -108,7 +108,7 @@ const HistoryPage = () => {
         result.push(jsonColumns)
         return result;
     }, [jsonColumns, numberColumns])
-    console.log(listHistoryOrders)
+
     return (
         <Layout className='history-container'>
             <Row gutter={[20, 20]}>

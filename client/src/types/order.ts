@@ -13,5 +13,16 @@ export interface IOrders {
     updatedAt: string,
     __v: number,
     type: string
+}
 
+export interface IAddOrder {
+    name: string,
+    phone: string,
+    address: string,
+    totalPrice: number,
+    detail: {
+        bookName: string,
+        quantity: number,
+        _id: string
+    }[],
 }

@@ -62,7 +62,11 @@ instance.interceptors.response.use(function (response) {
         }
     }
 
-    return error?.response?.data ?? Promise.reject(error);
+    const errorMessage = error?.response?.data?.message;
+    return errorMessage
+        ? errorMessage
+        : Promise.reject(error);
+
 });
 
 export default instance;

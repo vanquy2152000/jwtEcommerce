@@ -41,7 +41,6 @@ const ModalImportUser = ({ openModal, handleSaveModalImportUser, handleCloseModa
             }
         } else {
             notification.error({
-                description: res.message,
                 message: 'Đã có lỗi xảy ra',
             })
         }

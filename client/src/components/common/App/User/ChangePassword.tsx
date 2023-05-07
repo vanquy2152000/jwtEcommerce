@@ -39,7 +39,6 @@ const ChangePassword = (props: Props) => {
     } else {
       notification.error({
         message: 'Đã có lỗi xảy ra khi thay đổi mật khẩu',
-        description: res.message
       })
     }
   }

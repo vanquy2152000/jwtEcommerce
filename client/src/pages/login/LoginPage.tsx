@@ -16,6 +16,7 @@ const LoginPage = () => {
     const onFinish = async (values: any) => {
         setLoading(true)
         const res = await loginUser(values)
+        console.log(res)
 
         if (res && res.data) {
             localStorage.setItem('access_token', res?.data?.access_token)
@@ -29,7 +30,7 @@ const LoginPage = () => {
                 notification.error({
                     message: 'Có lỗi xảy ra',
                     description:
-                        res.message && Array.isArray(res.message) ? res.message[0] : res.message,
+                        res && Array.isArray(res) ? res[0] : res,
                     duration: 5,
                 })
             }, 2000)

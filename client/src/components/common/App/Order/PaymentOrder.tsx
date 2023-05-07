@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { doDeleteCartAction, doPlaceOrderAction, doUpdateCartAction } from '../../../../redux/order/orderSlice'
 import { useEffect, useState } from 'react';
 import { useForm } from 'antd/es/form/Form'
-import { IOrders } from '../../../../types/order'
+import { IAddOrder, IOrders } from '../../../../types/order'
 import { postOrderBook } from '../../../../service/orderApi'
 
 type Props = {
@@ -57,7 +57,7 @@ const PaymentOrder = ({ setCurrentStep }: Props) => {
             }
         })
 
-        const orderPayload: IOrders = {
+        const orderPayload: IAddOrder = {
             name: form.getFieldValue('name'),
             phone: form.getFieldValue('phone'),
             address: form.getFieldValue('address'),
@@ -74,7 +74,6 @@ const PaymentOrder = ({ setCurrentStep }: Props) => {
             } else {
                 notification.error({
                     message: 'Đã có lỗi xảy ra',
-                    description: res.message
                 })
             }
         }

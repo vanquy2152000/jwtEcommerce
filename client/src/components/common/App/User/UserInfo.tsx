@@ -68,7 +68,6 @@ const UserInfo = (props: Props) => {
         } else {
             notification.error({
                 message: 'Đã có lỗi xảy ra',
-                description: res.message
             })
         }
     }
