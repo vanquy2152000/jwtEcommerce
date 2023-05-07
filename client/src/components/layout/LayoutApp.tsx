@@ -1,4 +1,4 @@
-import ModalManageAccount from '../common/App/History/ModalManageAccount';
+import ModalManageAccount from '../common/App/User/ModalManageAccount';
 import { Link, Outlet, useNavigate } from 'react-router-dom'
 import { Footer, Header } from 'antd/es/layout/layout'
 import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar, Popover, Button, Typography, Image, Row, Col } from 'antd'
@@ -217,7 +217,7 @@ const LayoutApp = () => {
                                 Quy chế hoạt động Sàn GDTMĐT
                             </Typography.Text>
                             <Typography.Text>
-                                Bán hàng cùng Tiki
+                                Bán hàng cùng Ecommerce
                             </Typography.Text>
                         </Col>
                         <Col md={6} xs={24} style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>

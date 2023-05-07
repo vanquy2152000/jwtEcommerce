@@ -1,11 +1,11 @@
 import moment from 'moment'
-import ReactJson from 'react-json-view'
 import { Col, Layout, Pagination, Row, Table, Tag, Typography } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import { IHistories } from '../../../types/history';
 import { useEffect, useState, useMemo, useRef } from 'react';
 import { getHistoryOrder } from '../../../service/historyApi'
 import './HistoryPage.scss'
+import JSONPretty from 'react-json-pretty';
 
 const HistoryPage = () => {
     const [listHistoryOrders, setListHistoryOrders] = useState<IHistories[]>([])
@@ -98,7 +98,7 @@ const HistoryPage = () => {
             width: "30%",
             dataIndex: 'json',
             render: (_: any, record: IHistories, __: number) => (
-                <ReactJson src={record.detail} name='Chi tiết đơn mua' collapsed={true} />
+                <JSONPretty id="json-pretty" data={record.detail} name='Chi tiết đơn mua' collapsed={true} />
             )
         }
     }, [])

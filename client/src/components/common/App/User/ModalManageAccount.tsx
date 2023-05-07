@@ -1,7 +1,8 @@
 import { Modal, Tabs, Typography } from 'antd'
 import React from 'react'
-import UserInfo from '../User/UserInfo'
-import ChangePassword from '../User/ChangePassword'
+import UserInfo from './UserInfo'
+import ChangePassword from './ChangePassword'
+import { JSX } from 'react/jsx-runtime'
 
 type Props = {
     openModal: boolean
