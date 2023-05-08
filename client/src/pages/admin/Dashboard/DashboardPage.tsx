@@ -2,6 +2,7 @@ import { Card, Col, Row, Statistic } from 'antd'
 import CountUp from 'react-countup';
 import { useState, useEffect } from 'react';
 import { getDashboard } from '../../../service/dashboardApi';
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 
 const DashboardPage = () => {
@@ -19,27 +20,30 @@ const DashboardPage = () => {
   }, [])
 
   return (
-    <Row gutter={[40, 40]}>
-      <Col span={12}>
-        <Card title="" bordered={false}>
-          <Statistic
-            title='Tổng người dùng'
-            value={dataDashboard.countUser ?? 0}
-            formatter={formatter}
-          />
-        </Card>
-      </Col>
-      <Col span={12}>
-        <Card title="" bordered={false}>
-          <Statistic
-            title='Tổng đơn hàng'
-            value={dataDashboard.countOrder ?? 0}
-            formatter={formatter}
-          />
-        </Card>
+    <>
+      <AppHelmet title="Dashboard" />
+      <Row gutter={[40, 40]}>
+        <Col span={12}>
+          <Card title="" bordered={false}>
+            <Statistic
+              title='Tổng người dùng'
+              value={dataDashboard.countUser ?? 0}
+              formatter={formatter}
+            />
+          </Card>
+        </Col>
+        <Col span={12}>
+          <Card title="" bordered={false}>
+            <Statistic
+              title='Tổng đơn hàng'
+              value={dataDashboard.countOrder ?? 0}
+              formatter={formatter}
+            />
+          </Card>
 
-      </Col>
-    </Row>
+        </Col>
+      </Row>
+    </>
   )
 }
 

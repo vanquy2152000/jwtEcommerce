@@ -5,6 +5,7 @@ import { BiTrash } from 'react-icons/bi'
 import { useDispatch, useSelector } from 'react-redux'
 import { doDeleteCartAction, doUpdateCartAction } from '../../../../redux/order/orderSlice'
 import { useEffect, useState } from 'react';
+import AppHelmet from '../../Helmet/AppHelmet'
 
 type Props = {
     setCurrentStep: any
@@ -47,6 +48,7 @@ const ViewOrder = ({ setCurrentStep }: Props) => {
 
     return (
         <>
+            <AppHelmet title="Order Ecommerce" />
             <Row gutter={[20, 20]} className='order-content'>
                 <Col md={18} xs={24} className='order-left'>
                     {

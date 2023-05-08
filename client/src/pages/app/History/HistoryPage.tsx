@@ -6,6 +6,7 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import { getHistoryOrder } from '../../../service/historyApi'
 import './HistoryPage.scss'
 import JSONPretty from 'react-json-pretty';
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 const HistoryPage = () => {
     const [listHistoryOrders, setListHistoryOrders] = useState<IHistories[]>([])
@@ -91,7 +92,7 @@ const HistoryPage = () => {
             width: '4%'
         }
     }, [baseIndex])
-    
+
     const jsonColumns = useMemo(() => {
         return {
             title: "Chi tiết",
@@ -110,39 +111,42 @@ const HistoryPage = () => {
     }, [jsonColumns, numberColumns])
 
     return (
-        <Layout className='history-container'>
-            <Row gutter={[20, 20]}>
-                <Col span={24}>
-                    <Table
-                        bordered
-                        title={() => (<Typography.Title level={5} style={{ margin: '0' }}>Lịch sử mua hàng</Typography.Title>)}
-                        rowKey={record => record._id}
-                        columns={columns}
-                        dataSource={listHistoryOrders.filter((item, index) => {
-                            const start = (currentPage - 1) * pageSize;
-                            const end = start + pageSize;
-                            return index >= start && index < end;
-                        })}
-                        pagination={false}
-                        loading={loading}
-                        className='custom-table'
-                        style={{ borderRadius: '20px' }}
-                    />
-                </Col>
-                <Col span={24}>
-                    <Pagination
-                        total={history.current.length}
-                        showTotal={(total) => `Tổng ${total} đơn hàng`}
-                        style={{ textAlign: "center", padding: 20 }}
-                        onChange={handlePageTableClick}
-                        current={currentPage}
-                        defaultCurrent={1}
-                        pageSize={pageSize}
-                    />
-                </Col>
-            </Row>
+        <>
+            <AppHelmet title="History Ecommerce" />
+            <Layout className='history-container'>
+                <Row gutter={[20, 20]}>
+                    <Col span={24}>
+                        <Table
+                            bordered
+                            title={() => (<Typography.Title level={5} style={{ margin: '0' }}>Lịch sử mua hàng</Typography.Title>)}
+                            rowKey={record => record._id}
+                            columns={columns}
+                            dataSource={listHistoryOrders.filter((item, index) => {
+                                const start = (currentPage - 1) * pageSize;
+                                const end = start + pageSize;
+                                return index >= start && index < end;
+                            })}
+                            pagination={false}
+                            loading={loading}
+                            className='custom-table'
+                            style={{ borderRadius: '20px' }}
+                        />
+                    </Col>
+                    <Col span={24}>
+                        <Pagination
+                            total={history.current.length}
+                            showTotal={(total) => `Tổng ${total} đơn hàng`}
+                            style={{ textAlign: "center", padding: 20 }}
+                            onChange={handlePageTableClick}
+                            current={currentPage}
+                            defaultCurrent={1}
+                            pageSize={pageSize}
+                        />
+                    </Col>
+                </Row>
 
-        </Layout>
+            </Layout>
+        </>
     )
 }
 

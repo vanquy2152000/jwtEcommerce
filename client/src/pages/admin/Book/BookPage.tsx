@@ -17,6 +17,7 @@ import { IBooks } from '../../../types/book';
 import { deleteBook, getListBooksWithPaginate } from '../../../service/bookApi';
 import './BookPage.scss'
 import '../../../scss/custom-table.scss'
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 const { confirm } = Modal;
 
@@ -311,6 +312,7 @@ const BookPage = () => {
 
   return (
     <>
+      <AppHelmet title="Manage Books" />
       <Layout className='book-container'>
         <Row gutter={[20, 20]}>
           <Col span={24}>

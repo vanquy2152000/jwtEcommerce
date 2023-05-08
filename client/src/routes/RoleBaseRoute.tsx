@@ -1,6 +1,4 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
 import NotPermitted from '../components/common/Found/NotPermitted'
 
 type Props = { children: any }

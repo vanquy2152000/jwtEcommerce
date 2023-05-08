@@ -10,6 +10,7 @@ import { getListOrdersWithPaginations } from '../../../service/orderApi';
 import { IOrders } from '../../../types/order';
 import './OrderPage.scss'
 import '../../../scss/custom-table.scss'
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 const Order = () => {
   const [loadings, setLoadings] = useState<boolean[]>([])
@@ -184,6 +185,7 @@ const Order = () => {
 
   return (
     <>
+      <AppHelmet title="Manage Orders" />
       <Layout className='book-container'>
         <Row gutter={[20, 20]}>
           <Col span={24}>

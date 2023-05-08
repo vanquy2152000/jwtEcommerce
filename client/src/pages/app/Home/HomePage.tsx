@@ -9,6 +9,7 @@ import { debounce } from 'lodash';
 import './HomePage.scss'
 import '../../../scss/custom-button.scss'
 import { useNavigate, useOutletContext } from 'react-router-dom'
+import AppHelmet from '../../../components/common/Helmet/AppHelmet'
 
 const items: TabsProps['items'] = [
     {
@@ -188,6 +189,7 @@ const Home = () => {
 
     return (
         <>
+            <AppHelmet title="Home Ecommerce" />
             <Layout className="home-container">
                 <Row gutter={[20, 20]} wrap={false}>
                     <Col flex='auto' md={4} sm={0} xs={0} className='home-left-sidebar'>

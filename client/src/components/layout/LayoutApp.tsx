@@ -1,5 +1,10 @@
+import paypal from '../../assets/PaymentMethods/paypal.png'
+import bitcoin from '../../assets/PaymentMethods/bitcoin.png'
+import shopify from '../../assets/PaymentMethods/shopify.png'
+import visa from '../../assets/PaymentMethods/visa.png'
 import ModalManageAccount from '../common/App/User/ModalManageAccount';
-import { Link, Outlet, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Footer, Header } from 'antd/es/layout/layout'
 import { Badge, Input, Dropdown, Space, MenuProps, message, Layout, Avatar, Popover, Button, Typography, Image, Row, Col } from 'antd'
 import { DownOutlined, ShoppingCartOutlined } from '@ant-design/icons'
@@ -7,14 +12,9 @@ import { FaReact } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser } from '../../service/authApi'
 import { doLogoutUser } from '../../redux/account/accountSlice'
-import {  useState } from 'react';
+import { debounce } from 'lodash';
 import './LayoutApp.scss'
 import '../../scss/global-popover.scss'
-import paypal from '../../assets/PaymentMethods/paypal.png'
-import bitcoin from '../../assets/PaymentMethods/bitcoin.png'
-import shopify from '../../assets/PaymentMethods/shopify.png'
-import visa from '../../assets/PaymentMethods/visa.png'
-import { debounce } from 'lodash';
 
 const LayoutApp = () => {
     const navigate = useNavigate()
@@ -29,12 +29,12 @@ const LayoutApp = () => {
 
     const urlAvatar = `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user?.avatar}`
 
+    // popover
     const visibleCarts = showAll ? carts : carts.slice(0, 6);
 
     const handleViewMore = () => {
         setShowAll(true);
     };
-    console.log(searchTerm)
 
     const text = <Typography.Text strong>Sản phẩm mới thêm</Typography.Text>;
     const contentPopover = (
@@ -78,6 +78,7 @@ const LayoutApp = () => {
         </>
     );
 
+    // dropdown
     let items: MenuProps['items'] = [
         {
             label: <div onClick={() => setShowModalManageAccount(true)}>Quản lí tài khoản</div>,
@@ -96,6 +97,7 @@ const LayoutApp = () => {
         },
     ];
 
+    // check authenticated
     if (isAuthenticated === true && user?.role === 'ADMIN') {
         items.unshift({
             label: <Link to="/admin">Trang quản trị</Link>,
@@ -115,7 +117,6 @@ const LayoutApp = () => {
         setShowModalManageAccount(false)
     }
     const handleOnSearch = (values: string) => {
-        console.log('values :', values)
         setSearchTerm(values)
     }
 

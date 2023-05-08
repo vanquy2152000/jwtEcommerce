@@ -17,6 +17,7 @@ import { ColumnsType } from 'antd/es/table'
 import { EditTwoTone, ExclamationCircleFilled } from '@ant-design/icons';
 import './UserPage.scss'
 import '../../../scss/custom-table.scss'
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 const { confirm } = Modal;
 
@@ -291,6 +292,7 @@ const UserPage = () => {
 
   return (
     <>
+      <AppHelmet title="Manage Users" />
       <Layout className='user-container'>
         <Row gutter={[20, 20]}>
           <Col span={24}>

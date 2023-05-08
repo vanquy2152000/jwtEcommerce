@@ -14,7 +14,7 @@ import BookPage from '../pages/admin/Book/BookPage';
 import OrderPage from '../pages/admin/Order/OrderPage';
 import HistoryPage from '../pages/app/History/HistoryPage';
 import { useEffect } from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { BrowserRouter, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 const AppRoutes = () => {

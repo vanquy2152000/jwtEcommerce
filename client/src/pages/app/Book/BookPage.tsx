@@ -4,6 +4,7 @@ import ViewDetail from '../../../components/common/App/Book/ViewDetail'
 import { Layout } from 'antd'
 import { getBookDetail } from '../../../service/bookApi'
 import { IBooks } from '../../../types/book'
+import AppHelmet from '../../../components/common/Helmet/AppHelmet'
 
 type Props = {}
 
@@ -56,9 +57,12 @@ const Book = (props: Props) => {
   }, [id])
 
   return (
-    <Layout >
-      <ViewDetail dataBook={dataBook} />
-    </Layout>
+    <>
+      <AppHelmet title="Detail Book" />
+      <Layout >
+        <ViewDetail dataBook={dataBook} />
+      </Layout>
+    </>
   )
 }
 

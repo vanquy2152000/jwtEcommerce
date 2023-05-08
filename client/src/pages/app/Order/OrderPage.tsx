@@ -1,14 +1,16 @@
 import ViewOrder from "../../../components/common/App/Order/ViewOrder"
+import PaymentOrder from "../../../components/common/App/Order/PaymentOrder";
 import { useState } from 'react';
 import { Button, Result, Steps } from "antd"
 import { SmileOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import './OrderPage.scss'
 import '../../../scss/custom-button.scss'
-import PaymentOrder from "../../../components/common/App/Order/PaymentOrder";
 
 
 const Order = () => {
   const [currentStep, setCurrentStep] = useState<number>(0)
+  const navigate = useNavigate()
 
   return (
     <div style={{ background: '#efefef', padding: '20px 0' }}>
@@ -41,7 +43,7 @@ const Order = () => {
           <Result
             icon={<SmileOutlined style={{ color: '#ea4c89' }} />}
             title='Đơn hàng đã được đặt thành công!'
-            extra={<Button htmlType="button" className='btn-history'>Xem Lịch Sử</Button>}
+            extra={<Button htmlType="button" className='btn-history' onClick={() => navigate('/history')}>Xem Lịch Sử</Button>}
             style={{ backgroundColor: '#fff' }}
           />
         }
