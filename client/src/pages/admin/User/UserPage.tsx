@@ -1,4 +1,6 @@
 import * as XLSX from 'xlsx';
+import moment from 'moment';
+import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 import InputSearch from '../../../components/common/Admin/Search/InputSearch'
 import UserDetail from '../../../components/common/Admin/User/UserDetail';
 import ModalUser from '../../../components/common/Admin/User/ModalUser';
@@ -14,10 +16,9 @@ import { BiImport, BiExport } from 'react-icons/bi'
 import { GrRefresh } from 'react-icons/gr'
 import { AiOutlineEdit, AiOutlineEye } from 'react-icons/ai'
 import { ColumnsType } from 'antd/es/table'
-import { EditTwoTone, ExclamationCircleFilled } from '@ant-design/icons';
+import { ExclamationCircleFilled } from '@ant-design/icons';
 import './UserPage.scss'
 import '../../../scss/custom-table.scss'
-import AppHelmet from '../../../components/common/Helmet/AppHelmet';
 
 const { confirm } = Modal;
 
@@ -228,7 +229,17 @@ const UserPage = () => {
           <span>{record.phone}</span>
         )
       },
-
+    },
+    {
+      title: "Ngày tạo",
+      width: "20%",
+      dataIndex: 'createdAt',
+      sorter: true,
+      render: (_, record, __) => {
+        return (
+          <span>{moment(record.createdAt).format('DD-MM-YYYY')}</span>
+        )
+      },
     },
   ]
 

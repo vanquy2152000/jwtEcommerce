@@ -69,6 +69,12 @@ const Sidebar = ({ collapsed }: Props) => {
         localStorage.setItem("activeMenu", e.key);
     }
 
+    const handleClickLogo = () => {
+        navigate('/admin')
+        setActiveMenu('dashboard')
+        localStorage.setItem("activeMenu", 'dashboard')
+    }
+
     return (
         <Sider
             width={220}
@@ -88,7 +94,8 @@ const Sidebar = ({ collapsed }: Props) => {
         >
             <div
                 className="logo"
-                style={{ cursor: 'default' }}
+                style={{ cursor: 'pointer' }}
+                onClick={handleClickLogo}
             >
                 <FaReact className='rotate icon-react' />
             </div>

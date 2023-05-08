@@ -1,23 +1,25 @@
-/* table */
-.ant-table {
-    box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
-    font-size: 12px;
-}
-/* row data */
-.ant-table-tbody > tr > td {
-    height: 10px;
-    padding: 4px;
-    text-align: left;
-}
+.custom-table {
+    /* table */
+    .ant-table {
+        box-shadow: 5px 8px 24px 5px rgba(208, 216, 243, 0.6);
+        font-size: 12px;
+    }
+    /* row data */
+    .ant-table-tbody > tr > td {
+        height: 10px;
+        padding: 4px;
+        text-align: left;
+    }
 
-/* row tags */
-.my-tag {
-    font-size: 12px;
-}
-.ant-table-thead > tr > th {
-    background-color: #fff;
-    height: 20px;
-    padding: 4px;
-    font-size: 14px;
-    font-weight: bold;
+    /* row tags */
+    .my-tag {
+        font-size: 12px;
+    }
+    .ant-table-thead > tr > th {
+        background-color: #fff;
+        height: 20px;
+        padding: 4px;
+        font-size: 14px;
+        font-weight: bold;
+    }
 }
